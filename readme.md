@@ -76,7 +76,7 @@ else nums[index] = nums[index-1];
 
 **使用了动态规划算法。**
 
-先复习一下动态规划算法(https://www.zhihu.com/question/39948290/answer/883302989)。
+先复习一下动态规划算法(https://www.zhihu.com/question/39948290/answer/883302989)
 
 动态规划算法分为三个子目标：
 
