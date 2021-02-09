@@ -209,7 +209,8 @@ return func2(A,K)-func2(A,K-1);
 标准的使用滑动窗口法，窗口移动的规则为：
 
 ```c++
-//当当前窗口内的和sum<target的时候，让窗口向右扩展，当sum>=target的时候，收缩窗口直到窗口的和sum重新小于target，在收缩窗口的过程中不断记录sum>=target时的最短的长度。
+//当当前窗口内的和sum<target的时候，让窗口向右扩展，当sum>=target的时候，收缩窗口直到窗口的和sum重新小于target，
+//在收缩窗口的过程中不断记录sum>=target时的最短的长度。
 while (right<nums.size()){
             sum+=nums[right];
             while(sum>=target){
@@ -225,7 +226,25 @@ while (right<nums.size()){
         }
 ```
 
+### 2021.2.9 [3. 无重复字符的最长子串](https://leetcode-cn.com/problems/longest-substring-without-repeating-characters/)
 
+标准的使用滑动窗口法，窗口移动的规则为：
+
+```c++
+//当当前窗口内没有重复字符的时候，窗口向右扩展，当有重复字符的时候，窗口收缩直到没有重复字符为止
+//每次窗口变化之后都要计算length
+int alphabet[128] = {0};//初始化一个ascii码数组存放字符出现次数
+while (right<s.size()){
+            alphabet[(int)s[right]]++;
+            while (alphabet[(int)s[right]]>1){
+                alphabet[s[left]]--;
+                left++;
+            }
+            right++;
+            length = std::max(length,right-left);
+        }
+        return length;
+```
 
 
 
