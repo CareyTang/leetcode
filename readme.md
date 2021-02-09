@@ -204,6 +204,27 @@ int func2(vector<int>&A,int K){
 return func2(A,K)-func2(A,K-1);
 ```
 
+### 2021.2.9 [209. 长度最小的子数组](https://leetcode-cn.com/problems/minimum-size-subarray-sum/)
+
+标准的使用滑动窗口法，窗口移动的规则为：
+
+```c++
+//当当前窗口内的和sum<target的时候，让窗口向右扩展，当sum>=target的时候，收缩窗口直到窗口的和sum重新小于target，在收缩窗口的过程中不断记录sum>=target时的最短的长度。
+while (right<nums.size()){
+            sum+=nums[right];
+            while(sum>=target){
+                if(flag){
+                    length = right-left+1;
+                    flag = false;
+                }
+                else length = std::min(length,right-left+1);
+                sum-=nums[left];
+                ++left;
+            }
+            ++right;
+        }
+```
+
 
 
 
