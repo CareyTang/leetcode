@@ -21,7 +21,8 @@ public:
         int count = 0;
         for(std::size_t index = 1;index<size-1;++index){
             if(nums[index]<nums[index-1]){
-                if(index==1||nums[index]>=nums[index-2]) nums[index-1] = nums[index];
+                if(index==1||nums[index]>=nums[index-2])
+                    nums[index-1] = nums[index];
                 else nums[index] = nums[index-1];
                 ++count;
             }
