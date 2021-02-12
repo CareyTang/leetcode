@@ -29,7 +29,8 @@ public:
                 left++;
             }
             right++;
-            if(right-left==size1) return true;
+            if(right-left==size1)
+                return true;
 
         }
         return false;
