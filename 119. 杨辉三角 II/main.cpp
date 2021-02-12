@@ -28,10 +28,20 @@ public:
         }
         return nums[rowIndex];
     }
+
+    vector<int> getRow2(int rowIndex){
+        vector<int> nums(rowIndex+1,1);
+        for(int times = 1;times<rowIndex+1;++times){
+            for(int column = times-1;column>0;--column){
+                nums[column] += nums[column-1];
+            }
+        }
+        return nums;
+    }
 };
 
 int main() {
     Solution sol;
-    sol.getRow(3);
+    sol.getRow2(3);
     return 0;
 }

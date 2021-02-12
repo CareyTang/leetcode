@@ -315,3 +315,20 @@ vector<int> getRow(int rowIndex) {
     return nums[rowIndex];
 ```
 
+还有第二个思路，就是设置一个简单的一维`vector`存储数据
+
+```c++
+//同样初始化的时候设置成rowIndex+1个1
+//由于在二维数组中，每次我们都是利用nums[row][column] = nums[row-1][column-1] + nums[row-1][column]修改row行数据
+//在一维数组中，由于修改nums[column]的数据需要用到nums[column-1]的值，所以如果从左往右修改会因为当前修改的column-1的值影响
+//后面的column的值，所以从右往左修改。
+vector<int> getRow2(int rowIndex){
+    vector<int> nums(rowIndex+1,1);
+    for(int times = 1;times<rowIndex+1;++times){
+        for(int column = times-1;column>0;--column){
+            nums[column] += nums[column-1];
+        }
+    }
+    return nums;
+}
+```
