@@ -275,11 +275,7 @@ else return false;
 
 ### 2021.2.11 [703. 数据流中的第 K 大元素](https://leetcode-cn.com/problems/kth-largest-element-in-a-stream/)
 
-想法是在初始化`KthLargest`的时候就直接先找出前K大的所有元素，放在一个`set`或者一个`vector`里面
-
-有一个`priority_queue`的容器可以完美的解决这个问题(https://en.cppreference.com/w/cpp/container/priority_queue)
-
-关于`priority_queue`的实现可以看数据结构的`heap`相关
+想法是在初始化`KthLargest`的时候就直接先找出前K大的所有元素，放在一个`set`或者一个`vector`里面，所以这个问题就转换成了设计一个合理的容器出来，后来发现有一个叫做`priority_queue`的容器可以完美的解决这个问题(https://en.cppreference.com/w/cpp/container/priority_queue)，关于`priority_queue`的实现可以看数据结构的`heap`相关。
 
 ```c++
 int k = {};
@@ -299,4 +295,23 @@ int add(int val) {
 //内存消耗：19.4 MB, 在所有 C++ 提交中击败了69.98%的用户
 ```
 
+### 2021.2.12 [119. 杨辉三角 II](https://leetcode-cn.com/problems/pascals-triangle-ii/)
+
+由于杨辉三角只和当前这一行以及上一行油有关，可以设计一个二维的`vector`存储元素
+
+```c++
+//注意几个细节问题：
+//1.由于数组的下标为0开始，但是杨辉三角下标从1开始，所以初始化的时候要到rowIndex+1才停止
+//2.第一行和第二行都不需要进行修改，直接跳过，同时可以避免第二行计算的时候发生越界
+vector<int> getRow(int rowIndex) {
+    vector<vector<int>> nums = {};
+    for(int row = 0;row<rowIndex+1;++row)
+        nums.push_back(vector<int>(row+1,1));
+    for(int row = 2;row<rowIndex+1;++row){
+        for(int column = 1;column<row;++column){
+            nums[row][column] = nums[row-1][column-1] + nums[row-1][column];
+        }
+    }
+    return nums[rowIndex];
+```
 
