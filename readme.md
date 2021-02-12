@@ -273,6 +273,30 @@ while(right < size2){
 else return false;
 ```
 
+### 2021.2.12 [703. 数据流中的第 K 大元素](https://leetcode-cn.com/problems/kth-largest-element-in-a-stream/)
 
+想法是在初始化`KthLargest`的时候就直接先找出前K大的所有元素，放在一个`set`或者一个`vector`里面
+
+有一个`priority_queue`的容器可以完美的解决这个问题(https://en.cppreference.com/w/cpp/container/priority_queue)
+
+关于`priority_queue`的实现可以看数据结构的`heap`相关
+
+```c++
+int k = {};
+priority_queue<int,vector<int>,std::greater<int>> pqueue;
+KthLargest(int k, vector<int>& nums) {
+	this->k = k;
+	for(int i = 0; i <nums.size();++i)add(nums[i]);
+}
+
+int add(int val) {
+	pqueue.push(val);
+	if(pqueue.size()> this->k)
+		pqueue.pop();
+	return pqueue.top();
+}
+//执行用时：56 ms, 在所有 C++ 提交中击败了58.28%的用户
+//内存消耗：19.4 MB, 在所有 C++ 提交中击败了69.98%的用户
+```
 
 

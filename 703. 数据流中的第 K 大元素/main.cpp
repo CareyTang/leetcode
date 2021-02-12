@@ -7,35 +7,36 @@
 #include <deque>
 #include <set>
 #include <map>
+#include <queue>
 
 using std::vector;
 using std::string;
 using std::deque;
 using std::multiset;
 using std::multimap;
+using std::set;
+using std::priority_queue;
 
-class Solution {
+class KthLargest {
 public:
-    bool checkInclusion(string s1, string s2) {
-        int alphabet[26] = {0};
-        std::size_t size1 = s1.size(), size2 = s2.size();
-        for(std::size_t i = 0;i<size1;i++)
-            alphabet[s1[i]-'a']--;
-        std::size_t left = 0, right = 0;
-        while(right < size2){
-            alphabet[s2[right]-'a']++;
-            while(alphabet[s2[right]-'a']>0){
-                alphabet[s2[left]-'a']--;
-                left++;
-            }
-            if(right-left==size1) return true;
-        }
-        return false;
+    int k = {};
+    priority_queue<int,vector<int>,std::greater<int>> pqueue;
+    KthLargest(int k, vector<int>& nums) {
+        this->k = k;
+        for(int i = 0; i <nums.size();++i)add(nums[i]);
+    }
+
+    int add(int val) {
+        pqueue.push(val);
+        if(pqueue.size()> this->k)
+            pqueue.pop();
+        return pqueue.top();
     }
 };
 
 int main() {
-    std::cout << "Hello, World!" << std::endl;
-    int alphabet[26] = {0};
+    vector<int> nums = {4, 5, 8, 2};
+    KthLargest* obj = new KthLargest(3, nums);
+
     return 0;
 }
