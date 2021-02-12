@@ -246,7 +246,7 @@ while (right<s.size()){
         return length;
 ```
 
-### 2021.2.10 [703. 数据流中的第 K 大元素](https://leetcode-cn.com/problems/kth-largest-element-in-a-stream/)
+### 2021.2.10 [567. 字符串的排列](https://leetcode-cn.com/problems/permutation-in-string/)
 
 一般进行这样的匹配的题目，通常的做法是初始化一个用来存储一共会出现的字符的次数的数组或者map，`map可以设计成{出现的字符:出现的次数}`这样的结构，但是map的操作比较费内存和时间，用数组替代可能更好一点。对于这类匹配的题目，关键要搞清楚什么时候应该对窗口大小进行修改。
 
@@ -273,7 +273,7 @@ while(right < size2){
 else return false;
 ```
 
-### 2021.2.12 [703. 数据流中的第 K 大元素](https://leetcode-cn.com/problems/kth-largest-element-in-a-stream/)
+### 2021.2.11 [703. 数据流中的第 K 大元素](https://leetcode-cn.com/problems/kth-largest-element-in-a-stream/)
 
 想法是在初始化`KthLargest`的时候就直接先找出前K大的所有元素，放在一个`set`或者一个`vector`里面
 
