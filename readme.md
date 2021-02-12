@@ -246,7 +246,32 @@ while (right<s.size()){
         return length;
 ```
 
+### 2021.2.10 [703. 数据流中的第 K 大元素](https://leetcode-cn.com/problems/kth-largest-element-in-a-stream/)
 
+一般进行这样的匹配的题目，通常的做法是初始化一个用来存储一共会出现的字符的次数的数组或者map，`map可以设计成{出现的字符:出现的次数}`这样的结构，但是map的操作比较费内存和时间，用数组替代可能更好一点。对于这类匹配的题目，关键要搞清楚什么时候应该对窗口大小进行修改。
+
+题目中的要求是判断 **s2** 是否包含 **s1** 的排列，所以首先初始化一个s1可能出现的所有元素的数组，然后通过遍历s2不断修改s1中的值，判断是否满足要求。
+
+```c++
+//所以首先初始化s1数组，由于s1都是小写字母组成的，所以可以用length=26的数组存储，并且对于s1中出现了的字母初始化为1
+int alphabet[26] = (26,0);
+std::size_t size1 = s1.size(), size2 = s2.size();
+for(std::size_t i = 0;i<size1;i++)
+    alphabet[s1[i]-'a']--;
+//然后遍历s2中的字符，对每一个字符都计数+1，然后对于这个字符如果当前的计数>0，就说明这个字符不在s1中或者已经超出了s1中出现的次数
+//所以如果发生了这样的情况，就计数--；最后判断是否right-left==size2
+std::size_t left = 0, right = 0;
+while(right < size2){
+    alphabet[s2[right]-'a']++;
+    while(alphabet[s2[right]-'a']>0){
+        alphabet[s2[left]-'a']--;
+        left++;
+    }
+    right++;
+    if(right-left==size1) return true;
+}
+else return false;
+```
 
 
 
