@@ -273,7 +273,7 @@ while(right < size2){
 else return false;
 ```
 
-### 2021.2.11 [703. 数据流中的第 K 大元素](https://leetcode-cn.com/problems/kth-largest-element-in-a-stream/)
+### [重点]2021.2.11 [703. 数据流中的第 K 大元素](https://leetcode-cn.com/problems/kth-largest-element-in-a-stream/)
 
 想法是在初始化`KthLargest`的时候就直接先找出前K大的所有元素，放在一个`set`或者一个`vector`里面，所以这个问题就转换成了设计一个合理的容器出来，后来发现有一个叫做`priority_queue`的容器可以完美的解决这个问题(https://en.cppreference.com/w/cpp/container/priority_queue)，关于`priority_queue`的实现可以看数据结构的`heap`相关。
 
@@ -332,3 +332,73 @@ vector<int> getRow2(int rowIndex){
     return nums;
 }
 ```
+
+### 2021.2.13 [136. 只出现一次的数字](https://leetcode-cn.com/problems/single-number/)
+
+很神奇，利用了异或的性质。
+
+```c++
+A^A=0;0^A=A;
+//如果对一个数组遍历异或，那么由于数组中的出现了两次的数经过异或操作之后为0，所以最后剩下的就是只出现了一次的那个数
+int singleNumber2(vector<int>nums)  {
+    int res{nums[0]};
+    int size = nums.size();
+    for (int i = 1; i < size; ++i) {
+        res = res ^ nums[i];
+    }
+    return res;
+}
+```
+
+### 2021.2.13 [448. 找到所有数组中消失的数字](https://leetcode-cn.com/problems/find-all-numbers-disappeared-in-an-array/)
+
+首先注意题目中的两个关键点：
+
+1. 数组长度为n
+2. 数组中的元素值都在1~n内
+
+考虑到可能会出现大量重复的元素，所以首先使用`set`降重，然后遍历set寻找哪个1~n的元素不在`set`中
+
+```c++
+ vector<int> findDisappearedNumbers(vector<int>& nums) {
+     set<int> numbers{nums.begin(),nums.end()};
+     vector<int>res{};
+     int size = nums.size();
+     for (int i = 1; i < size+1; ++i) {
+         if(numbers.find(i)==numbers.end())res.push_back(i);
+     }
+     return res;
+ }
+//执行用时：160 ms, 在所有 C++ 提交中击败了14.53%的用户
+//内存消耗：44.1 MB, 在所有 C++ 提交中击败了7.00%的用户
+//主要是在find中需要遍历numbers，所以相当于这个时间复杂度为size*numbers/2
+//所以优化的地方在于，能不能不需要用set的find实现寻找元素是否出现这个功能，关键在于能不能摆脱set容器
+```
+
+现在考虑如何不借助`set`实现记录出现的次数的功能，以`{4,3,2,7,8,2,3,1}`为例，长度为8，所以会出现的数字为1~8，映射成下标0-7，所以假设一个数字出现了一次，那么我们就令这个数字-1为下标，这个下标对应的数字乘以-1，那么最后没有出现的数字-1作为下标对应的数字自然就是正数，这样子就可以利用正负数区分开来。
+
+```c++
+for(int i = 0;i<nums.size();++i){
+    nums[abs(nums[i])-1] *= -1;
+}
+```
+
+但是由于数组中有些数字会出现2次，那么连续乘以两次-1之后又成为了正数，就不符合我们的期望了，所以对于一个已经是负数的数，就不应该再乘以-1。
+
+```c++
+for(int i = 0;i<nums.size();++i){
+	if(nums[abs(nums[i])-1] < 0) continue;
+    nums[abs(nums[i])-1] *= -1;
+}
+```
+
+或者从另一个角度来看，可以无论怎么样都对这个数的绝对值乘以-1，这样就不会发生负数变为正数的情况。
+
+```c++
+for(int i=0;i<nunms.size();++i){
+	nums[abs(nums[i])-1] = -1 * abs(nums[abs(nums[i])-1]);
+}
+```
+
+
+
