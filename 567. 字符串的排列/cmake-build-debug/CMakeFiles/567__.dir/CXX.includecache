@@ -6,7 +6,7 @@
 
 #IncludeRegexTransform: 
 
-D:/.DATA/leetcode/567. 字符串的排列/main.cpp
+E:/leetcode/567. 字符串的排列/main.cpp
 iostream
 -
 map

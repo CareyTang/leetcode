@@ -1,4 +1,4 @@
-# Install script for directory: D:/.DATA/leetcode/703. 数据流中的第 K 大元素
+# Install script for directory: E:/leetcode/703. 数据流中的第 K 大元素
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -40,5 +40,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "D:/.DATA/leetcode/703. 数据流中的第 K 大元素/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "E:/leetcode/703. 数据流中的第 K 大元素/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

@@ -246,8 +246,89 @@ while (right<s.size()){
         return length;
 ```
 
+### 2021.2.10 [567. 字符串的排列](https://leetcode-cn.com/problems/permutation-in-string/)
 
+一般进行这样的匹配的题目，通常的做法是初始化一个用来存储一共会出现的字符的次数的数组或者map，`map可以设计成{出现的字符:出现的次数}`这样的结构，但是map的操作比较费内存和时间，用数组替代可能更好一点。对于这类匹配的题目，关键要搞清楚什么时候应该对窗口大小进行修改。
 
+题目中的要求是判断 **s2** 是否包含 **s1** 的排列，所以首先初始化一个s1可能出现的所有元素的数组，然后通过遍历s2不断修改s1中的值，判断是否满足要求。
 
+```c++
+//所以首先初始化s1数组，由于s1都是小写字母组成的，所以可以用length=26的数组存储，并且对于s1中出现了的字母初始化为1
+int alphabet[26] = (26,0);
+std::size_t size1 = s1.size(), size2 = s2.size();
+for(std::size_t i = 0;i<size1;i++)
+    alphabet[s1[i]-'a']--;
+//然后遍历s2中的字符，对每一个字符都计数+1，然后对于这个字符如果当前的计数>0，就说明这个字符不在s1中或者已经超出了s1中出现的次数
+//所以如果发生了这样的情况，就计数--；最后判断是否right-left==size2
+std::size_t left = 0, right = 0;
+while(right < size2){
+    alphabet[s2[right]-'a']++;
+    while(alphabet[s2[right]-'a']>0){
+        alphabet[s2[left]-'a']--;
+        left++;
+    }
+    right++;
+    if(right-left==size1) return true;
+}
+else return false;
+```
 
+### 2021.2.11 [703. 数据流中的第 K 大元素](https://leetcode-cn.com/problems/kth-largest-element-in-a-stream/)
 
+想法是在初始化`KthLargest`的时候就直接先找出前K大的所有元素，放在一个`set`或者一个`vector`里面，所以这个问题就转换成了设计一个合理的容器出来，后来发现有一个叫做`priority_queue`的容器可以完美的解决这个问题(https://en.cppreference.com/w/cpp/container/priority_queue)，关于`priority_queue`的实现可以看数据结构的`heap`相关。
+
+```c++
+int k = {};
+priority_queue<int,vector<int>,std::greater<int>> pqueue;
+KthLargest(int k, vector<int>& nums) {
+	this->k = k;
+	for(int i = 0; i <nums.size();++i)add(nums[i]);
+}
+
+int add(int val) {
+	pqueue.push(val);
+	if(pqueue.size()> this->k)
+		pqueue.pop();
+	return pqueue.top();
+}
+//执行用时：56 ms, 在所有 C++ 提交中击败了58.28%的用户
+//内存消耗：19.4 MB, 在所有 C++ 提交中击败了69.98%的用户
+```
+
+### 2021.2.12 [119. 杨辉三角 II](https://leetcode-cn.com/problems/pascals-triangle-ii/)
+
+由于杨辉三角只和当前这一行以及上一行油有关，可以设计一个二维的`vector`存储元素
+
+```c++
+//注意几个细节问题：
+//1.由于数组的下标为0开始，但是杨辉三角下标从1开始，所以初始化的时候要到rowIndex+1才停止
+//2.第一行和第二行都不需要进行修改，直接跳过，同时可以避免第二行计算的时候发生越界
+vector<int> getRow(int rowIndex) {
+    vector<vector<int>> nums = {};
+    for(int row = 0;row<rowIndex+1;++row)
+        nums.push_back(vector<int>(row+1,1));
+    for(int row = 2;row<rowIndex+1;++row){
+        for(int column = 1;column<row;++column){
+            nums[row][column] = nums[row-1][column-1] + nums[row-1][column];
+        }
+    }
+    return nums[rowIndex];
+```
+
+还有第二个思路，就是设置一个简单的一维`vector`存储数据
+
+```c++
+//同样初始化的时候设置成rowIndex+1个1
+//由于在二维数组中，每次我们都是利用nums[row][column] = nums[row-1][column-1] + nums[row-1][column]修改row行数据
+//在一维数组中，由于修改nums[column]的数据需要用到nums[column-1]的值，所以如果从左往右修改会因为当前修改的column-1的值影响
+//后面的column的值，所以从右往左修改。
+vector<int> getRow2(int rowIndex){
+    vector<int> nums(rowIndex+1,1);
+    for(int times = 1;times<rowIndex+1;++times){
+        for(int column = times-1;column>0;--column){
+            nums[column] += nums[column-1];
+        }
+    }
+    return nums;
+}
+```

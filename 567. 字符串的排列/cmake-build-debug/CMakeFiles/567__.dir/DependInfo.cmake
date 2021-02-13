@@ -4,7 +4,7 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "D:/.DATA/leetcode/567. 字符串的排列/main.cpp" "D:/.DATA/leetcode/567. 字符串的排列/cmake-build-debug/CMakeFiles/567__.dir/main.cpp.obj"
+  "E:/leetcode/567. 字符串的排列/main.cpp" "E:/leetcode/567. 字符串的排列/cmake-build-debug/CMakeFiles/567__.dir/main.cpp.obj"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 
