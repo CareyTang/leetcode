@@ -248,7 +248,7 @@ while (right<s.size()){
 
 ### 2021.2.10 [567. 字符串的排列](https://leetcode-cn.com/problems/permutation-in-string/)
 
-一般进行这样的匹配的题目，通常的做法是初始化一个用来存储一共会出现的字符的次数的数组或者map，`map可以设计成{出现的字符:出现的次数}`这样的结构，但是map的操作比较费内存和时间，用数组替代可能更好一点。对于这类匹配的题目，关键要搞清楚什么时候应该对窗口大小进行修改。
+一般进行这样的匹配的题目，通常的做法是初始化一个用来存储一共会出现的字符的次数的数组或者map，`map可以设计成{出现的字符:出现的次数}`这样的结构，但是map的操作比较费内存和时间，用数组替代可能更好一点。**对于这类匹配的题目，关键要搞清楚什么时候应该对窗口大小进行修改。**
 
 题目中的要求是判断 **s2** 是否包含 **s1** 的排列，所以首先初始化一个s1可能出现的所有元素的数组，然后通过遍历s2不断修改s1中的值，判断是否满足要求。
 
@@ -275,7 +275,7 @@ else return false;
 
 ### [重点]2021.2.11 [703. 数据流中的第 K 大元素](https://leetcode-cn.com/problems/kth-largest-element-in-a-stream/)
 
-想法是在初始化`KthLargest`的时候就直接先找出前K大的所有元素，放在一个`set`或者一个`vector`里面，所以这个问题就转换成了设计一个合理的容器出来，后来发现有一个叫做`priority_queue`的容器可以完美的解决这个问题(https://en.cppreference.com/w/cpp/container/priority_queue)，关于`priority_queue`的实现可以看数据结构的`heap`相关。
+想法是在初始化`KthLargest`的时候就直接先找出前K大的所有元素，放在一个`set`或者一个`vector`里面，所以这个问题就转换成了设计一个合理的容器出来，**后来发现有一个叫做`priority_queue`的容器可以完美的解决这个问题(https://en.cppreference.com/w/cpp/container/priority_queue)，关于`priority_queue`的实现可以看数据结构的`heap`相关。**
 
 ```c++
 int k = {};
@@ -335,7 +335,7 @@ vector<int> getRow2(int rowIndex){
 
 ### 2021.2.13 [136. 只出现一次的数字](https://leetcode-cn.com/problems/single-number/)
 
-很神奇，利用了异或的性质。
+很神奇，利用了**异或**的性质。
 
 ```c++
 A^A=0;0^A=A;
@@ -357,7 +357,7 @@ int singleNumber2(vector<int>nums)  {
 1. 数组长度为n
 2. 数组中的元素值都在1~n内
 
-考虑到可能会出现大量重复的元素，所以首先使用`set`降重，然后遍历set寻找哪个1~n的元素不在`set`中
+考虑到可能会出现大量重复的元素，所以**首先使用`set`降重**，然后遍历set寻找哪个1~n的元素不在`set`中
 
 ```c++
  vector<int> findDisappearedNumbers(vector<int>& nums) {
