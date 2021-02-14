@@ -400,5 +400,51 @@ for(int i=0;i<nunms.size();++i){
 }
 ```
 
+### 2021.2.14 [765. 情侣牵手](https://leetcode-cn.com/problems/couples-holding-hands/)
 
+1. 首先，题目给定了N对couples，那么一定是可以完成配对的；
+2. couples的初始化位置不对，需要还原成couples的正确位置
+
+```c++
+/*
+总是假设下标为偶数的人所在位置一定是正确的，那么如果couples位置正确，就有两种可能
+1. [1,2],[3,4]……奇数的比偶数的+1
+2. [2,1],[4,3]……偶数的比奇数的-1
+如果不满足这两种情况，就需要去寻找2N中寻找正确的数值，然后swap
+*/
+int res{};
+for (auto it = row.begin();it!=row.end();it=it+2) {
+    int& current = *it;
+    int& right = *(it+1);
+    //如果current是偶数，那么right必然比current大一,[0,1],[2,3]
+    //如果current是奇数，那么right必然比current小一,[1,0],[3,2]
+    if( (current%2==1 && right==current-1) || (current%2==0)&&right==current+1) continue;
+    //如果是奇数，就要去row里面找到current-1，然后swap，如果是偶数，就去row里面找current+1，然后swap
+    auto findTemp = std::find(row.begin(),row.end(),current%2==1?current-1:current+1);
+    std::swap(right,*findTemp);
+    ++res;
+}
+return res;
+```
+
+### 2021.2.14 [5676. 生成交替二进制字符串的最少操作数](https://leetcode-cn.com/problems/minimum-changes-to-make-alternating-binary-string/)
+
+这个题目对应的交替二进制字符串只有两种情况，一种是`01010101……`，一种是`10101010……`
+
+前者下标偶数对应0，下标奇数对应1；后者下标偶数对应1，下标奇数对应1；'0'的ascii码值为48，'1'的ascii码值为49所以只要遍历整个字符串看看是前者的情况多还是后者的情况多就知道答案了。
+
+```c++
+int minOperations(string s) {
+	int size = s.size();
+	int cnt1 = 0, cnt2 = 0;
+	for (int i = 0; i < size;++i) {
+        //符合前者，++cnt1
+		if( (i%2==0&&s[i]!='0') || (i%2==1&&s[i]!='1') )++cnt1;
+        //符合后者，++cnt2
+		else if( (i%2==0&&s[i]!='1') || (i%2==1&&s[i]!='0') )++cnt2;
+	}
+    //最后整个字符串里面有cnt1个前者，cnt2个后者，那么需要把少的那个改成另一种，所以一共需要改std::min(cnt1,cnt2)次
+	return std::min(cnt1,cnt2);
+}
+```
 
