@@ -448,3 +448,43 @@ int minOperations(string s) {
 }
 ```
 
+### 2021.2.15 [485. 最大连续1的个数](https://leetcode-cn.com/problems/max-consecutive-ones/)
+
+1. 通过遍历数组，如果是1，就count++，如果不是1，就比较一次当前的count和之前的maxcount谁更大，最后遍历完了之后再比较一次
+
+```c++
+int findMaxConsecutiveOnes(vector<int>& nums) {
+    int count{};
+    int maxCount{};
+    int size = nums.size();
+    for (int i = 0; i < size; ++i) {
+        if(nums[i]==1)++count;
+        else{
+            maxCount = std::max(maxCount,count);
+            count = 0;
+        }
+    }
+    maxCount = std::max(maxCount,count);
+    return maxCount;
+}
+```
+
+2. 滑动窗口法，如果right值为1，那么窗口扩大，如果不是1，那么就窗口缩小令left=right+1，并且伴随--count。
+
+```c++
+int findMaxConsecutiveOnes2(vector<int>& nums) {
+    int res{};
+    int left = 0, right = 0;
+    int size = nums.size();
+    while (right<size){
+        if(nums[right++]!=1){
+            left = right;
+        }
+        res = max(right-left,res);
+        ++right;
+    }
+    return res;
+}
+```
+
+**发现把`std::max`改成`max`后用时和内存都有所下降，推测原因如下：因为`std::max`定义为`template`编程，适用于所有的数据类型，所以`std::max`相比`max`具有普适性，但是同样由于这个原因，用时可能会更久，所以如果是同样的数据类型，用`max`可能更好一点**
