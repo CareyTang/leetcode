@@ -13,25 +13,37 @@ using std::string;
 using std::deque;
 using std::multiset;
 using std::multimap;
+using std::map;
+using std::set;
 
 class Solution {
 public:
     vector<int> findDisappearedNumbers(vector<int>& nums) {
-        int size = nums.size();
-        int times[size+1];
+        set<int> numbers{nums.begin(),nums.end()};
         vector<int>res{};
-        for (int i = 0; i < size; ++i) {
-            times[nums[i]]++;
-        }
-        for (int i = 1; i < size; ++i) {
-            if(times[nums[i]]==0)res.push_back(i);
+        int size = nums.size();
+        for (int i = 1; i < size+1; ++i) {
+            if(numbers.find(i)==numbers.end())res.push_back(i);
         }
         return res;
     }
+    vector<int> findDisappearedNumbers2(vector<int>& nums) {
+        vector<int>res{};
+        int size = nums.size();
+        for (int i = 0; i < size; ++i) {
+            nums[std::abs(nums[i])-1] = -1 * std::abs(nums[std::abs(nums[i])-1]);
+        }
+        for (int i = 0; i < size; ++i) {
+            if(nums[i]>0)res.push_back(i+1);
+        }
+        return res;
+    }
+
 };
+
 int main() {
-    Solution sol;
     vector<int>nums{4,3,2,7,8,2,3,1};
-    sol.findDisappearedNumbers(nums);
+    Solution sol;
+    sol.findDisappearedNumbers2(nums);
     return 0;
 }

@@ -1,0 +1,28 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+D:/.DATA/leetcode/5676. 生成交替二进制字符串的最少操作数/main.cpp
+iostream
+-
+map
+-
+string
+-
+vector
+-
+algorithm
+-
+numeric
+-
+deque
+-
+set
+-
+map
+-
+

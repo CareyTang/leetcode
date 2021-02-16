@@ -248,7 +248,7 @@ while (right<s.size()){
 
 ### 2021.2.10 [567. 字符串的排列](https://leetcode-cn.com/problems/permutation-in-string/)
 
-一般进行这样的匹配的题目，通常的做法是初始化一个用来存储一共会出现的字符的次数的数组或者map，`map可以设计成{出现的字符:出现的次数}`这样的结构，但是map的操作比较费内存和时间，用数组替代可能更好一点。对于这类匹配的题目，关键要搞清楚什么时候应该对窗口大小进行修改。
+一般进行这样的匹配的题目，通常的做法是初始化一个用来存储一共会出现的字符的次数的数组或者map，`map可以设计成{出现的字符:出现的次数}`这样的结构，但是map的操作比较费内存和时间，用数组替代可能更好一点。**对于这类匹配的题目，关键要搞清楚什么时候应该对窗口大小进行修改。**
 
 题目中的要求是判断 **s2** 是否包含 **s1** 的排列，所以首先初始化一个s1可能出现的所有元素的数组，然后通过遍历s2不断修改s1中的值，判断是否满足要求。
 
@@ -273,9 +273,9 @@ while(right < size2){
 else return false;
 ```
 
-### 2021.2.11 [703. 数据流中的第 K 大元素](https://leetcode-cn.com/problems/kth-largest-element-in-a-stream/)
+### [重点]2021.2.11 [703. 数据流中的第 K 大元素](https://leetcode-cn.com/problems/kth-largest-element-in-a-stream/)
 
-想法是在初始化`KthLargest`的时候就直接先找出前K大的所有元素，放在一个`set`或者一个`vector`里面，所以这个问题就转换成了设计一个合理的容器出来，后来发现有一个叫做`priority_queue`的容器可以完美的解决这个问题(https://en.cppreference.com/w/cpp/container/priority_queue)，关于`priority_queue`的实现可以看数据结构的`heap`相关。
+想法是在初始化`KthLargest`的时候就直接先找出前K大的所有元素，放在一个`set`或者一个`vector`里面，所以这个问题就转换成了设计一个合理的容器出来，**后来发现有一个叫做`priority_queue`的容器可以完美的解决这个问题(https://en.cppreference.com/w/cpp/container/priority_queue)，关于`priority_queue`的实现可以看数据结构的`heap`相关。**
 
 ```c++
 int k = {};
@@ -332,3 +332,159 @@ vector<int> getRow2(int rowIndex){
     return nums;
 }
 ```
+
+### 2021.2.13 [136. 只出现一次的数字](https://leetcode-cn.com/problems/single-number/)
+
+很神奇，利用了**异或**的性质。
+
+```c++
+A^A=0;0^A=A;
+//如果对一个数组遍历异或，那么由于数组中的出现了两次的数经过异或操作之后为0，所以最后剩下的就是只出现了一次的那个数
+int singleNumber2(vector<int>nums)  {
+    int res{nums[0]};
+    int size = nums.size();
+    for (int i = 1; i < size; ++i) {
+        res = res ^ nums[i];
+    }
+    return res;
+}
+```
+
+### 2021.2.13 [448. 找到所有数组中消失的数字](https://leetcode-cn.com/problems/find-all-numbers-disappeared-in-an-array/)
+
+首先注意题目中的两个关键点：
+
+1. 数组长度为n
+2. 数组中的元素值都在1~n内
+
+考虑到可能会出现大量重复的元素，所以**首先使用`set`降重**，然后遍历set寻找哪个1~n的元素不在`set`中
+
+```c++
+ vector<int> findDisappearedNumbers(vector<int>& nums) {
+     set<int> numbers{nums.begin(),nums.end()};
+     vector<int>res{};
+     int size = nums.size();
+     for (int i = 1; i < size+1; ++i) {
+         if(numbers.find(i)==numbers.end())res.push_back(i);
+     }
+     return res;
+ }
+//执行用时：160 ms, 在所有 C++ 提交中击败了14.53%的用户
+//内存消耗：44.1 MB, 在所有 C++ 提交中击败了7.00%的用户
+//主要是在find中需要遍历numbers，所以相当于这个时间复杂度为size*numbers/2
+//所以优化的地方在于，能不能不需要用set的find实现寻找元素是否出现这个功能，关键在于能不能摆脱set容器
+```
+
+现在考虑如何不借助`set`实现记录出现的次数的功能，以`{4,3,2,7,8,2,3,1}`为例，长度为8，所以会出现的数字为1~8，映射成下标0-7，所以假设一个数字出现了一次，那么我们就令这个数字-1为下标，这个下标对应的数字乘以-1，那么最后没有出现的数字-1作为下标对应的数字自然就是正数，这样子就可以利用正负数区分开来。
+
+```c++
+for(int i = 0;i<nums.size();++i){
+    nums[abs(nums[i])-1] *= -1;
+}
+```
+
+但是由于数组中有些数字会出现2次，那么连续乘以两次-1之后又成为了正数，就不符合我们的期望了，所以对于一个已经是负数的数，就不应该再乘以-1。
+
+```c++
+for(int i = 0;i<nums.size();++i){
+	if(nums[abs(nums[i])-1] < 0) continue;
+    nums[abs(nums[i])-1] *= -1;
+}
+```
+
+或者从另一个角度来看，可以无论怎么样都对这个数的绝对值乘以-1，这样就不会发生负数变为正数的情况。
+
+```c++
+for(int i=0;i<nunms.size();++i){
+	nums[abs(nums[i])-1] = -1 * abs(nums[abs(nums[i])-1]);
+}
+```
+
+### 2021.2.14 [765. 情侣牵手](https://leetcode-cn.com/problems/couples-holding-hands/)
+
+1. 首先，题目给定了N对couples，那么一定是可以完成配对的；
+2. couples的初始化位置不对，需要还原成couples的正确位置
+
+```c++
+/*
+总是假设下标为偶数的人所在位置一定是正确的，那么如果couples位置正确，就有两种可能
+1. [1,2],[3,4]……奇数的比偶数的+1
+2. [2,1],[4,3]……偶数的比奇数的-1
+如果不满足这两种情况，就需要去寻找2N中寻找正确的数值，然后swap
+*/
+int res{};
+for (auto it = row.begin();it!=row.end();it=it+2) {
+    int& current = *it;
+    int& right = *(it+1);
+    //如果current是偶数，那么right必然比current大一,[0,1],[2,3]
+    //如果current是奇数，那么right必然比current小一,[1,0],[3,2]
+    if( (current%2==1 && right==current-1) || (current%2==0)&&right==current+1) continue;
+    //如果是奇数，就要去row里面找到current-1，然后swap，如果是偶数，就去row里面找current+1，然后swap
+    auto findTemp = std::find(row.begin(),row.end(),current%2==1?current-1:current+1);
+    std::swap(right,*findTemp);
+    ++res;
+}
+return res;
+```
+
+### 2021.2.14 [5676. 生成交替二进制字符串的最少操作数](https://leetcode-cn.com/problems/minimum-changes-to-make-alternating-binary-string/)
+
+这个题目对应的交替二进制字符串只有两种情况，一种是`01010101……`，一种是`10101010……`
+
+前者下标偶数对应0，下标奇数对应1；后者下标偶数对应1，下标奇数对应1；'0'的ascii码值为48，'1'的ascii码值为49所以只要遍历整个字符串看看是前者的情况多还是后者的情况多就知道答案了。
+
+```c++
+int minOperations(string s) {
+	int size = s.size();
+	int cnt1 = 0, cnt2 = 0;
+	for (int i = 0; i < size;++i) {
+        //符合前者，++cnt1
+		if( (i%2==0&&s[i]!='0') || (i%2==1&&s[i]!='1') )++cnt1;
+        //符合后者，++cnt2
+		else if( (i%2==0&&s[i]!='1') || (i%2==1&&s[i]!='0') )++cnt2;
+	}
+    //最后整个字符串里面有cnt1个前者，cnt2个后者，那么需要把少的那个改成另一种，所以一共需要改std::min(cnt1,cnt2)次
+	return std::min(cnt1,cnt2);
+}
+```
+
+### 2021.2.15 [485. 最大连续1的个数](https://leetcode-cn.com/problems/max-consecutive-ones/)
+
+1. 通过遍历数组，如果是1，就count++，如果不是1，就比较一次当前的count和之前的maxcount谁更大，最后遍历完了之后再比较一次
+
+```c++
+int findMaxConsecutiveOnes(vector<int>& nums) {
+    int count{};
+    int maxCount{};
+    int size = nums.size();
+    for (int i = 0; i < size; ++i) {
+        if(nums[i]==1)++count;
+        else{
+            maxCount = std::max(maxCount,count);
+            count = 0;
+        }
+    }
+    maxCount = std::max(maxCount,count);
+    return maxCount;
+}
+```
+
+2. 滑动窗口法，如果right值为1，那么窗口扩大，如果不是1，那么就窗口缩小令left=right+1，并且伴随--count。
+
+```c++
+int findMaxConsecutiveOnes2(vector<int>& nums) {
+    int res{};
+    int left = 0, right = 0;
+    int size = nums.size();
+    while (right<size){
+        if(nums[right++]!=1){
+            left = right;
+        }
+        res = max(right-left,res);
+        ++right;
+    }
+    return res;
+}
+```
+
+**发现把`std::max`改成`max`后用时和内存都有所下降，推测原因如下：因为`std::max`定义为`template`编程，适用于所有的数据类型，所以`std::max`相比`max`具有普适性，但是同样由于这个原因，用时可能会更久，所以如果是同样的数据类型，用`max`可能更好一点**
