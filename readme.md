@@ -488,3 +488,19 @@ int findMaxConsecutiveOnes2(vector<int>& nums) {
 ```
 
 **发现把`std::max`改成`max`后用时和内存都有所下降，推测原因如下：因为`std::max`定义为`template`编程，适用于所有的数据类型，所以`std::max`相比`max`具有普适性，但是同样由于这个原因，用时可能会更久，所以如果是同样的数据类型，用`max`可能更好一点**
+
+### 2021.2.16 [561. 数组拆分 I](https://leetcode-cn.com/problems/array-partition-i/)
+
+观测题目中给的数据，如果分拆后的数组的和有最大值的话，必须要对数组进行排序，然后令数组每两个组成一个新的小数组
+
+```c++
+int arrayPairSum(vector<int>& nums) {
+    std::sort(nums.begin(),nums.end());
+    int size = nums.size();
+    int res{};
+    for (int i = 0; i < size; i+=2) {
+        res += nums[i];
+    }
+    return res;
+}
+```
