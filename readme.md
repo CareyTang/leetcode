@@ -504,3 +504,26 @@ int arrayPairSum(vector<int>& nums) {
     return res;
 }
 ```
+
+### 2021.2.17 [566. 重塑矩阵](https://leetcode-cn.com/problems/reshape-the-matrix/)
+
+实现matlab的`reshape()`函数，两个知识点：
+
+1. 将原数组降维成一维数组，从一维数组重建二维数组，使用一个index作为变量遍历数组，关键在于怎么从index得出数组的行列，每一行有column个元素，所以index%column表示当前行的第几个元素，而index/column表示第几行
+2. 二维vector的初始化以及元素访问，二维的vector相当于其中每个变量都是一个vector，所以定义一个这样的变量为`vector<vector<int>>nums{{1,2},{3,4}}`，访问为两个`[]`访问，比如`nums[0][1]`可以访问第一行vector里面的第二个元素
+
+```c++
+vector<vector<int>> matrixReshape(vector<vector<int>>& nums, int r, int c) {
+    std::size_t row = nums.size(), column = nums[0].size();
+    vector<vector<int>>res(r,vector<int>(c,0));\
+    std::size_t index{};
+    if(row*column!=r*c)return nums;
+    else{
+        while (index<row*column) {
+            res[index / c][index % c] = nums[index / column][index % column];
+            ++index;
+        }
+        return res;
+    }
+}
+```
