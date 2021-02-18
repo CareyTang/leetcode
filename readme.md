@@ -623,3 +623,80 @@ string strWithout3a3b(int a, int b) {
     }
     return item;
 ```
+
+### 2021.2.19 [1004. 最大连续1的个数 III](https://leetcode-cn.com/problems/max-consecutive-ones-iii/)
+
+典型的滑动窗口法，首先确定我们需要寻找的条件
+
+1. 要求最多可以变动`K`次，所以用`count0`来记录截止目前变动的次数；
+2. 每当遇到了0时，检查一下当前`count0`是否大于`K`，如果小于`K`，那么可以当做无事发生，窗口继续向右滑动；如果大于`K`，就说明此时不能再变化了，所以要收缩窗口直到窗口中0的个数重新小于`K`，并且由于最后窗口滑动到的那个0并没有被`count0`记录，所以最后还要补上。
+
+```c++
+int longestOnes(vector<int>& A, int K) {
+    int left = 0, right = 0, ret = 0, count0 = 0;
+    while(right<A.size()){
+        //如果当前元素为0
+        if(A[right]==0){
+            //如果窗口内0的次数小于K，++count0记录下来，正常滑动窗口
+            if(count0<K)++count0;
+            //如果此时窗口内0的次数>=K，那么就要收缩窗口直到窗口内0的个数重新小于K
+            else{
+                while(count0>=K){
+                    if(A[left]==0)--count0;
+                    ++left;
+                }
+                //并且由于最后的这个0并没有被记录下来，所以最后要把这个0出现的次数加上去
+                ++count0;
+            }
+        }
+        ++right;
+        ret = std::max(ret,right-left);
+    }
+    return ret;
+}
+```
+还可以进一步化简
+
+```c++
+int longestOnes(vector<int>& A, int K) {
+    int left = 0, right = 0, ret = 0, count0 = 0;
+    while(right<A.size()){
+        //只要当前元素为0，就记录下来窗口内0的个数
+        if(A[right]==0)++count0;
+        //直到窗口内0的个数重新不大于K，也就是说窗口内最多K个0
+        while(count0>K){
+            //收缩窗口
+            if(A[left]==0)--count0;
+            ++left;
+        }
+        ++right;
+        //关于到底最后窗口的长度到底是right-left+1还是right-left，取决于最后计算前right停下来的地方
+        //如果刚把当前right的元素完成遍历，此时窗口长度为right-left+1
+        //如果此时right++，表示扩大窗口了，那么就是right-left
+        ret = std::max(ret,right-left);
+    }
+    return ret;
+}
+```
+
+模板如下：
+
+```python
+def findSubArray(nums):
+    N = len(nums) # 数组/字符串长度
+    left, right = 0, 0 # 双指针，表示当前遍历的区间[left, right]，闭区间
+    sums = 0 # 用于统计 子数组/子区间 是否有效，根据题目可能会改成求和/计数
+    res = 0 # 保存最大的满足题目要求的 子数组/子串 长度
+    while right < N: # 当右边的指针没有搜索到 数组/字符串 的结尾
+        sums += nums[right] # 增加当前右边指针的数字/字符的求和/计数
+        while 区间[left, right]不符合题意：# 此时需要一直移动左指针，直至找到一个符合题意的区间
+            sums -= nums[left] # 移动左指针前需要从counter中减少left位置字符的求和/计数
+            left += 1 # 真正的移动左指针，注意不能跟上面一行代码写反
+        # 到 while 结束时，我们找到了一个符合题意要求的 子数组/子串
+        res = max(res, right - left + 1) # 需要更新结果
+        right += 1 # 移动右指针，去探索新的区间
+    return res
+```
+
+
+
