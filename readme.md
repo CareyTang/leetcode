@@ -527,3 +527,72 @@ vector<vector<int>> matrixReshape(vector<vector<int>>& nums, int r, int c) {
     }
 }
 ```
+
+### 2021.2.17 [4. 寻找两个正序数组的中位数](https://leetcode-cn.com/problems/median-of-two-sorted-arrays/)
+
+1. 最简单的方法：合并两个`vector`，然后从中转换为topk的问题
+2. 可以转换为`topK`的问题，
+
+### 2021.2.18 [1759. 统计同构子字符串的数目](https://leetcode-cn.com/problems/count-number-of-homogenous-substrings/)
+
+大数乘法溢出的问题，当`count=100000`的时候，发现`count*(count+1)`总是会溢出，当两个同种类型的数据进行乘法计算的话，得出来的结果会首先保存在同类型的空间中，哪怕溢出了也会先保存在同类型的空间中，然后再copy到结果中。所以为了避免溢出的情况，优先把`count*(count+1)`计算一下，看一下大小以及用什么类型存储，然后将结果、count都设置为指定类型的数据。
+
+### [重点]2021.2.18 [995. K 连续位的最小翻转次数](https://leetcode-cn.com/problems/minimum-number-of-k-consecutive-bit-flips/)
+
+1. [差分数组](https://blog.csdn.net/JingleLiA/article/details/108730954)的应用，对于这样的有可能是大规模数据的数组，要对数组中的区间进行频繁修改，如果一直修改的复杂度是`O(n*k)`，但是如果是改用差分数组的复杂度为常数`O(k)`。而差分数组的修改在于`diff[i]++,diff[i+k]--`
+2. 用`int`实现二进制的加减法，使用异或`^`符号，比如`int 1+1 = 0, 1+0=1,0+0=0`，恰好符合异或算法
+
+遍历整个`vector`，只有当`当前的元素为0，当前元素在之前累计修改次数为偶数次或当前元素为1，当前元素在之前累计修改次数为奇数次`才需要修改。
+
+并且注意边界条件，当`当前元素需要被翻转，但是当前元素下标+K>size`的时候，就说明接下来不能一次翻转K个元素，这个时候就应该退出。
+
+```c++
+int minKBitFlips(vector<int>& A, int K) {
+    int count = 0, sum = 0;
+    //新建一个vector作为差分数组存储当前元素和前一个元素翻转次数的差
+    vector<int>diff(A.size()+1,0);
+    for (int i = 0; i < A.size(); ++i) {
+        //用sum存储当前这个元素截止之前的修改次数，因为差分数组的特性，必须累加才知道当前元素的实际的值
+        sum ^= diff[i];
+        //如果当前元素需要修改
+        if(sum==A[i]){
+            //如果后续的元素不满足一次翻转k个元素，退出
+            if(i+K>A.size())return -1;
+            //因为当前元素需要修改，所以用diff记录下来，用异或实现二进制的加法，因为修改了两次和修改了零次是一样的
+            diff[i] ^= 1;
+            //因为当前元素需要修改，而sum没有记录这个时候的改变，所以sum也需要二进制的加法。
+            sum ^= 1;
+            diff[i+K] ^= 1;
+            //记录一共修改的次数
+            count++;
+        }
+    }
+    return count;
+}
+```
+
+注意到我们使用`diff`这个差分数组和`sum`一起构成了当前元素到目前被翻转的次数，可不可以直接在`A`上记录当前元素被翻转的次数？由于一个元素只有翻转0次和翻转1次两种情况，所以如果一个元素翻转了，那么我们就对这个元素加上一个特定的值`val`表示这个元素发生了翻转，再次发生翻转就减去这个特定的值`val`。
+
+由于翻转次数`flip`只能为0或1，当元素为0，`flip`为0时，需要翻转；当元素为1，`flip`为1时，需要翻转，所以总结就是：当`flip==A[i]`时，需要翻转。
+
+同时考虑到在`diff`差分数组中，如果某个元素发生了翻转，那么不仅`diff[i]^=1`，还需要`diff[i+K]^=1`，所以当我们遍历到`i+K`的时候，我们要检查一下`i`是否发生了翻转，如果发生了翻转，那么`flip^=1`
+
+```c++
+int minKBitFlips2(vector<int>& A, int K) {
+    int count = 0, sum = 0, flip = 0, val = 2;
+    for (int i = 0; i < A.size(); ++i) {
+        if (i >= K && A[i - K] >= val) {
+            flip ^= 1;
+            A[i - K] -= val;
+        }
+        if (flip == A[i]) {
+            if (i + K > A.size())return -1;
+            count++;
+            A[i] += val;
+            flip ^= 1;
+        }
+    }
+    return count;
+}
+```
+
