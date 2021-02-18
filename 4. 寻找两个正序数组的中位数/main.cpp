@@ -25,21 +25,7 @@ public:
 class Solution2 {
 public:
     int countHomogenous(string s) {
-        long long res{};
-        long long count{};
-        long long mod = 1e9+7;
-        char& current = s[0];
-        for(auto& item:s){
-            if(item==current)++count;
-            else{
-                res+=count*(count+1)/2;
-                count = 1;
-                current = item;
-            }
-        }
-        res=(res+count/2*(count+1));
-        res %= mod;
-        return res;
+
     }
 };
 int main() {
