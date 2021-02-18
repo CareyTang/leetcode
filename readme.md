@@ -596,3 +596,30 @@ int minKBitFlips2(vector<int>& A, int K) {
 }
 ```
 
+### 2021.2.18 [984. 不含 AAA 或 BBB 的字符串](https://leetcode-cn.com/problems/string-without-aaa-or-bbb/)
+
+从个数多的开始填入，满足下列要求：
+
+1. 当a的个数大于b的个数并且此时没有连续填入两个a，或者此时连续填入两个b，填入a
+2. 当b的个数大于a的个数并且此时没有连续填入两个b，或者此时连续填入两个a，填入b
+
+```c++
+string strWithout3a3b(int a, int b) {
+    string item{};
+    int countA = 0, countB = 0;
+    while (a!=0 || b!=0){
+        //当a的个数大于b的个数且连续填入小于两个a，或者此时已经连续填入两个b了
+        if((a>b && countA<2) || (countB==2)){
+            item.push_back('a');
+            a--;
+            countA++;
+            countB = 0;
+        }else{
+            item.push_back('b');
+            b--;
+            countB++;
+            countA = 0;
+        }
+    }
+    return item;
+```
