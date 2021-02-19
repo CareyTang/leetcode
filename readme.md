@@ -2,6 +2,11 @@
 
 ## author:Javy
 
+### 目录
+
+- [2021.2.2 424-替换后的最长重复字符](###2021.2.2)
+- 
+
 ### 2021.2.2 [424-替换后的最长重复字符](https://leetcode-cn.com/problems/longest-repeating-character-replacement/)
 
 使用了`std::max`替代了`max_element`，用时4ms(98.16%)，内存6.9mb(93.17%)
