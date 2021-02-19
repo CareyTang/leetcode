@@ -38,6 +38,27 @@ int removeElement(vector<int>& nums, int val) {
 }
 ```
 
+### 删除排序数组中的重复项
+
+明确一下规则，当遇到了不同的数字的时候，就要发生交换，交换后`left++`，如果是相同的数字，那么`right++`
+
+注意边界条件：由于需要`right-1`，所以right得从1开始，所以如果数组只有0或者1个元素，直接返回`size`
+
+```c++
+int removeDuplicates(vector<int>& nums) {
+    if(nums.size()==0 || nums.size()==1) return nums.size();
+    int left = 1, right = 1;
+    while(right<nums.size()){
+        if(nums[right]!=nums[right-1]){
+            nums[left] = nums[right];
+            ++left;
+        }
+        ++right;
+    }
+    return left;
+}
+```
+
 ### 删除排序数组中的重复项 II
 
 同样用一个`left`和`right`，遍历`nums`，用一个`count`记录这个数出现了多少次，用`current`表示当前记录的数
@@ -125,3 +146,23 @@ int maxArea(vector<int>& height) {
     return max;
 }
 ```
+
+### 买卖股票的最佳时机II
+
+很有意思的一道题目，首先买卖股票的核心是：相邻两天，低吸高抛。其次，如果股价连续上涨，那么多天连续交易的收入等同于区间交易的收入，但是只要股价存在下降，那么那一天就不应该操作。
+
+如果遇到这种情况可以特殊解释：第一天买入第二天卖出，第二天又买入第三天又卖出。这里第二天卖出的同时买入，其实相当于什么都没做。也就是说，相当于第一天买入，第三天再卖出。但是计算的时候，利润可以用第一次和第二次的利润直接相加的。
+
+```c++
+int maxProfit(vector<int>& prices) {
+        int buy = 0, sell = 1, income = 0;
+        if(prices.size()==1)return 0;
+        while(sell<prices.size()){
+            if(prices[buy]<prices[sell]) income += prices[sell]-prices[buy];
+            ++sell;
+            ++buy;
+        }
+        return income;
+    }
+```
+

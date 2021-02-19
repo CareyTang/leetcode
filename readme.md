@@ -698,5 +698,77 @@ def findSubArray(nums):
     return res
 ```
 
+### 2021.2.19 [66.加一](https://leetcode-cn.com/problems/plus-one/)
 
+很有意思的一道题目，正常想法如下：
+
+```c++
+vector<int> plusOne(vector<int>& digits) {
+        int cflag = 0;
+        //首先处理最后一位数
+        if(++digits[digits.size()-1]==10){
+            digits[digits.size()-1] = 0;
+            cflag = 1;
+        }
+        //开始处理其他的数
+        int index = digits.size()-2;
+        while(cflag!=0 && index!=-1){
+            --cflag;
+            if(++digits[index]==10){
+                digits[index] = 0;
+                ++cflag;
+            }
+            --index;
+        }
+        if(cflag)digits.insert(digits.begin(),1);
+        return digits;
+}
+
+```
+
+但是仔细分析一下，如果当前的这个值++后没有变成10，那么就说明没有发生进位，可以直接返回digitals了，但是如果发生了进位了，那么就继续循环遍历，如果遍历完了还没退出，就说明是999这样的情况，那么就应该最后insert
+
+```c++
+    vector<int> plusOne(vector<int>& digits) {
+        for(int index = digits.size()-1;index>=0;--index){
+            ++digits[index];
+            digits[index] %= 10;
+            if(digits[index]!=0) return digits;
+        }
+        digits.insert(digits.begin(),1);
+        return digits;
+    }
+```
+
+### 2021.2.19 [28. 实现 strStr()](https://leetcode-cn.com/problems/implement-strstr/)
+
+很有意思的一个题目，有很多边界条件
+
+```c++
+class Solution {
+public:
+    int strStr(string haystack, string needle) {
+        int ph = 0, pn = 0,ret = haystack.size();
+        //h="",n="aba"
+        if(haystack.size()==0 && needle.size()!=0)return -1;
+        //h="aba",n=""
+        else if(needle.size()==0 && haystack.size()!=0)return 0;
+        //h="",n=""
+        else if(needle.size()==0 && haystack.size()==0)return 0;
+        for(;ph<haystack.size();++ph){
+            if(haystack[ph]==needle[pn]){
+                ret = min(ret,ph);
+                if(pn==needle.size()-1)return ret;
+                ++pn;
+            }else{
+                ret = haystack.size();
+                ph = ph-pn;//因为接下来ph还需要++，所以这里就不+1了
+                pn = 0;
+                
+            }
+        }
+        return -1;
+    }
+};
+```
 
