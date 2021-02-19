@@ -531,7 +531,9 @@ vector<vector<int>> matrixReshape(vector<vector<int>>& nums, int r, int c) {
 ### 2021.2.17 [4. 寻找两个正序数组的中位数](https://leetcode-cn.com/problems/median-of-two-sorted-arrays/)
 
 1. 最简单的方法：合并两个`vector`，然后从中转换为topk的问题
-2. 可以转换为`topK`的问题，
+2. 二分查找
+
+
 
 ### 2021.2.18 [1759. 统计同构子字符串的数目](https://leetcode-cn.com/problems/count-number-of-homogenous-substrings/)
 
@@ -772,3 +774,37 @@ public:
 };
 ```
 
+### 2021.2.20 [697. 数组的度](https://leetcode-cn.com/problems/degree-of-an-array/)
+
+```c++
+int findShortestSubArray(vector<int>& nums) {
+    //首先我们需要存储的数据有，出现的元素，出现的次数，第一次出现的下标，最后一次出现的下标
+    //所以可以用一个map来存储，key为元素值
+    //value设置为一个vector，vector的size为3，0是次数，1是第一次下标，2是最后一次下标
+    map<int,vector<int>> counts{};
+    int ret = nums.size(),max{};
+    //然后第一次遍历，如果之前这个数据不在map里面，新添一个到map中，如果已经有了，map修改最后一次出现的下标
+    for(int i = 0; i < nums.size();++i){
+        if(counts.find(nums[i])==counts.end())counts[nums[i]] = {1,i,i};
+        else{
+            counts[nums[i]][0]++;
+            counts[nums[i]][2] = i;
+        }
+    }
+    //然后再遍历一次，如果当前元素出现的次数之前已经有前例了，那么就计算距离更新ret
+    //并且每次都要保存最短的距离
+    for(const auto& item:counts){
+        if(item.second[0]==max){
+            max = item.second[0];
+            ret = std::min(item.second[2] - item.second[1]+1,ret);
+        }else if(item.second[0]>max){
+            //如果出现的次数更大了，那么就重新计算距离
+            //由于需要保存最短的距离，所以ret必须清零避免之前次数较少的影响，这里将ret设置为nums的size初始化
+            ret = nums.size();
+            max = item.second[0];
+            ret = std::min(item.second[2] - item.second[1]+1,ret);
+        }
+    }
+    return ret;
+}
+```
