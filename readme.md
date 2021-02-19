@@ -4,7 +4,7 @@
 
 ### 目录
 
-- [2021.2.2 424-替换后的最长重复字符](###2021.2.2)
+- [2021.2.2 424-替换后的最长重复字符](###2021.2.2 [424-替换后的最长重复字符](https://leetcode-cn.com/problems/longest-repeating-character-replacement/))
 - 
 
 ### 2021.2.2 [424-替换后的最长重复字符](https://leetcode-cn.com/problems/longest-repeating-character-replacement/)
