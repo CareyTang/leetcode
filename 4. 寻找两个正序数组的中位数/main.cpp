@@ -20,17 +20,11 @@ public:
     double findMedianSortedArrays(vector<int>& nums1, vector<int>& nums2) {
 
     }
+
 };
 
-class Solution2 {
-public:
-    int countHomogenous(string s) {
 
-    }
-};
 int main() {
-    string s(100000,'w');
-    Solution2 sol2;
-    std::cout<<sol2.countHomogenous(s)<<std::endl;
+
     return 0;
 }
