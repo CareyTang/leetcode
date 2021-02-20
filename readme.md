@@ -843,3 +843,35 @@ int findShortestSubArray(vector<int>& nums) {
     return ret;
 }
 ```
+
+可以优化的地方：
+
+1. map改用unordered_map，因为unordered_map使用hash表而map使用的是红黑树，unordered_map的查找为O(1)
+2. map中的value从vector改成数组降低内存消耗
+
+```c++
+int findShortestSubArray(vector<int>& nums) {
+    unordered_map<int,int*> counts{};
+    int ret = nums.size(),degree{};
+    for(int i = 0; i < nums.size();++i) {
+        if ( counts.find(nums[i]) == counts.end()) {
+            int* temp = new int[3];
+            temp[0] = 1;
+            temp[1] = i;
+            temp[2] = i;
+            counts[nums[i]] = temp;
+        }else {
+            counts[nums[i]][0]++;
+            counts[nums[i]][2] = i;
+        }
+        degree = std::max(degree,counts[nums[i]][0]);
+    }
+    for(const auto& item:counts) {
+        if (item.second[0] == degree) {
+            ret = std::min(item.second[2] - item.second[1] + 1, ret);
+        }
+        else delete item.second;
+    }
+    return ret;
+}
+```
