@@ -1,53 +1,47 @@
-# Leetcode with cpp
-
-# author:Javy
-
-- [Leetcode with cpp](#leetcode-with-cpp)
-- [author:Javy](#authorjavy)
-    - [2021.2.2 424-替换后的最长重复字符](#202122-424-替换后的最长重复字符)
-    - [2021.2.2 面试题16.21 交换和](#202122-面试题1621-交换和)
-    - [2021.2.2 219. 存在重复元素 II](#202122-219-存在重复元素-ii)
-    - [2021.2.2 1332. 删除回文子序列](#202122-1332-删除回文子序列)
-    - [2021.2.3 480. 滑动窗口中位数](#202123-480-滑动窗口中位数)
-    - [2021.2.4 643. 子数组最大平均数 I](#202124-643-子数组最大平均数-i)
-    - [2021.2.5 1208. 尽可能使字符串相等](#202125-1208-尽可能使字符串相等)
-    - [2021.2.6 1423. 可获得的最大点数](#202126-1423-可获得的最大点数)
-    - [2021.2.7 665. 非递减数列](#202127-665-非递减数列)
-    - [2021.2.7 888. 公平的糖果棒交换](#202127-888-公平的糖果棒交换)
-    - [2021.2.8  978. 最长湍流子数组](#202128--978-最长湍流子数组)
-    - [2021.2.9 992. K 个不同整数的子数组](#202129-992-k-个不同整数的子数组)
-    - [2021.2.9 209. 长度最小的子数组](#202129-209-长度最小的子数组)
-    - [2021.2.9 3. 无重复字符的最长子串](#202129-3-无重复字符的最长子串)
-    - [2021.2.10 567. 字符串的排列](#2021210-567-字符串的排列)
-    - [[重点]2021.2.11 703. 数据流中的第 K 大元素](#重点2021211-703-数据流中的第-k-大元素)
-    - [2021.2.12 119. 杨辉三角 II](#2021212-119-杨辉三角-ii)
-    - [2021.2.13 136. 只出现一次的数字](#2021213-136-只出现一次的数字)
-    - [2021.2.13 448. 找到所有数组中消失的数字](#2021213-448-找到所有数组中消失的数字)
-    - [2021.2.14 765. 情侣牵手](#2021214-765-情侣牵手)
-    - [2021.2.14 5676. 生成交替二进制字符串的最少操作数](#2021214-5676-生成交替二进制字符串的最少操作数)
-    - [2021.2.15 485. 最大连续1的个数](#2021215-485-最大连续1的个数)
-    - [2021.2.16 561. 数组拆分 I](#2021216-561-数组拆分-i)
-    - [2021.2.17 566. 重塑矩阵](#2021217-566-重塑矩阵)
-    - [2021.2.17 4. 寻找两个正序数组的中位数](#2021217-4-寻找两个正序数组的中位数)
-    - [2021.2.18 1759. 统计同构子字符串的数目](#2021218-1759-统计同构子字符串的数目)
-    - [[重点]2021.2.18 995. K 连续位的最小翻转次数](#重点2021218-995-k-连续位的最小翻转次数)
-    - [2021.2.18 984. 不含 AAA 或 BBB 的字符串](#2021218-984-不含-aaa-或-bbb-的字符串)
-    - [2021.2.19 1004. 最大连续1的个数 III](#2021219-1004-最大连续1的个数-iii)
-    - [2021.2.19 66.加一](#2021219-66加一)
-    - [2021.2.19 28. 实现 strStr()](#2021219-28-实现-strstr)
-    - [2021.2.20 697. 数组的度](#2021220-697-数组的度)
-
-### 2021.2.2 424-替换后的最长重复字符
+- [2021.2.2 424-替换后的最长重复字符](#202122-424-替换后的最长重复字符)
+- [2021.2.2 面试题16.21 交换和](#202122-面试题1621-交换和)
+- [2021.2.2 219. 存在重复元素 II](#202122-219-存在重复元素-ii)
+- [2021.2.2 1332. 删除回文子序列](#202122-1332-删除回文子序列)
+- [2021.2.3 480. 滑动窗口中位数](#202123-480-滑动窗口中位数)
+- [2021.2.4 643. 子数组最大平均数 I](#202124-643-子数组最大平均数-i)
+- [2021.2.5 1208. 尽可能使字符串相等](#202125-1208-尽可能使字符串相等)
+- [2021.2.6 1423. 可获得的最大点数](#202126-1423-可获得的最大点数)
+- [2021.2.7 665. 非递减数列](#202127-665-非递减数列)
+- [2021.2.7 888. 公平的糖果棒交换](#202127-888-公平的糖果棒交换)
+- [2021.2.8  978. 最长湍流子数组](#202128--978-最长湍流子数组)
+- [2021.2.9 992. K 个不同整数的子数组](#202129-992-k-个不同整数的子数组)
+- [2021.2.9 209. 长度最小的子数组](#202129-209-长度最小的子数组)
+- [2021.2.10 567. 字符串的排列](#2021210-567-字符串的排列)
+- [[重点]2021.2.11 703. 数据流中的第 K 大元素](#重点2021211-703-数据流中的第-k-大元素)
+- [2021.2.12 119. 杨辉三角 II](#2021212-119-杨辉三角-ii)
+- [2021.2.13 136. 只出现一次的数字](#2021213-136-只出现一次的数字)
+- [2021.2.13 448. 找到所有数组中消失的数字](#2021213-448-找到所有数组中消失的数字)
+- [2021.2.14 765. 情侣牵手](#2021214-765-情侣牵手)
+- [2021.2.14 5676. 生成交替二进制字符串的最少操作数](#2021214-5676-生成交替二进制字符串的最少操作数)
+- [2021.2.15 485. 最大连续1的个数](#2021215-485-最大连续1的个数)
+- [2021.2.16 561. 数组拆分 I](#2021216-561-数组拆分-i)
+- [2021.2.17 566. 重塑矩阵](#2021217-566-重塑矩阵)
+- [2021.2.17 4. 寻找两个正序数组的中位数](#2021217-4-寻找两个正序数组的中位数)
+- [2021.2.18 1759. 统计同构子字符串的数目](#2021218-1759-统计同构子字符串的数目)
+- [[重点]2021.2.18 995. K 连续位的最小翻转次数](#重点2021218-995-k-连续位的最小翻转次数)
+- [2021.2.18 984. 不含 AAA 或 BBB 的字符串](#2021218-984-不含-aaa-或-bbb-的字符串)
+- [2021.2.19 1004. 最大连续1的个数 III](#2021219-1004-最大连续1的个数-iii)
+- [2021.2.19 66.加一](#2021219-66加一)
+- [2021.2.19 28. 实现 strStr()](#2021219-28-实现-strstr)
+- [2021.2.20 697. 数组的度](#2021220-697-数组的度)
+- [2021.2.21 1438. 绝对差不超过限制的最长连续子数组](#2021221-1438-绝对差不超过限制的最长连续子数组)
+- [[重点,动态规划]2021.2.21 5687. 执行乘法运算的最大分数](#重点动态规划2021221-5687-执行乘法运算的最大分数)
+# 2021.2.2 424-替换后的最长重复字符
 
 使用了`std::max`替代了`max_element`，用时4ms(98.16%)，内存6.9mb(93.17%)
 
 **知识点：少用algorithm的算法，能用下标的尽量用下标，不要使用复杂的容器和指针**
 
-### 2021.2.2 面试题16.21 交换和
+# 2021.2.2 面试题16.21 交换和
 
 **对于有大量数据的，如果用`vector`的话会导致超时，可以利用`set`的只保存`unique` 元素的特性进行处理，对`vector`的数据进行降维**
 
-### 2021.2.2 219. 存在重复元素 II
+# 2021.2.2 219. 存在重复元素 II
 
 **对于有大量的数据的，`set`可以对重复数据进行删减，从而减少有效数据的个数.**
 
@@ -55,7 +49,7 @@
 
 `insert(iter)`都是在当前的这个`iter`前面插入数据，如果不添加`hint`， 就会在调用`insert`函数的容器利用`Hash`算法找到插入的地方。
 
-### 2021.2.2 1332. 删除回文子序列
+# 2021.2.2 1332. 删除回文子序列
 
 脑筋急转弯的一道题，关键在于理解回文子序列这个意思，定义为：通过对原字符串中的某些字符进行删除，不改变其他字符的顺序，剩下的那些字符 依旧是回文形式，就成为回文子序列。所以说，对于只有`a和b`两种字符组成的字符串而言，只有三种情况：
 
@@ -63,11 +57,11 @@
 2. 当目前的字符串本身就是回文，那么需要删除的次数就是1次；对此可以`reverse()`进行判断
 3. 当目前的字符串不属于上面两种情况，那么需要删除的次数必然是2次，一次全删除`a`，一次全删除`b`。
 
-### 2021.2.3 480. 滑动窗口中位数
+# 2021.2.3 480. 滑动窗口中位数
 
 待完善
 
-### 2021.2.4 643. 子数组最大平均数 I
+# 2021.2.4 643. 子数组最大平均数 I
 
 对于此类的滑动窗口类型的题目，关键在于怎么确定窗口滑动的条件，一般的窗口滑动题目都有共性，比如：
 
@@ -75,16 +69,16 @@
 2. 需要对窗口进行平移操作，牵扯到窗口的`pop_front()`操作和`push_back()`操作，什么时候加入什么时候删除
 3. 窗口到头了的边界条件判断
 
-### 2021.2.5 [1208. 尽可能使字符串相等](https://leetcode-cn.com/problems/get-equal-substrings-within-budget/)
+# 2021.2.5 [1208. 尽可能使字符串相等](https://leetcode-cn.com/problems/get-equal-substrings-within-budget/)
 
 1. **用`std::abs()`代替`abs()`可以减少用时**
 2. 窗口滑动到最后窗口的大小变化是什么样子的
 
-### 2021.2.6 [1423. 可获得的最大点数](https://leetcode-cn.com/problems/maximum-points-you-can-obtain-from-cards/)
+# 2021.2.6 [1423. 可获得的最大点数](https://leetcode-cn.com/problems/maximum-points-you-can-obtain-from-cards/)
 
 关键在于使用逆向思维的方法，原本是可以在头部和尾部分开取元素以获得最大点数，但是反过来剩下的就是最小的点数的组合，所以如果计算什么样的窗口可以获得最小的点数，再用全部的`sum`减去最小的点数，剩下的就是最大的点数和了。同样要使用`std::min`来代替`min`。
 
-### 2021.2.7 [665. 非递减数列](https://leetcode-cn.com/problems/non-decreasing-array/)
+# 2021.2.7 [665. 非递减数列](https://leetcode-cn.com/problems/non-decreasing-array/)
 
 虽然是一个`easy`题，但是确实学到了很多东西。总结一下：
 
@@ -103,11 +97,11 @@ else nums[index] = nums[index-1];
 
 并且每次发生了修改之后都需要`++count`，然后最后判断`count<=1`，通过判断修改的次数是否超过了1，如果超过了，就说明不合格。
 
-### 2021.2.7 [888. 公平的糖果棒交换](https://leetcode-cn.com/problems/fair-candy-swap/)
+# 2021.2.7 [888. 公平的糖果棒交换](https://leetcode-cn.com/problems/fair-candy-swap/)
 
 难度不大，很简单的双指针比较题目。常使用`vector的push_back()`操作，但是发现很耗时间，最后使用双指针目前达到一个比较令人满意的结果。尝试后续使用`binart_search()`或者`hashmap`的方法。
 
-### 2021.2.8  [978. 最长湍流子数组](https://leetcode-cn.com/problems/longest-turbulent-subarray/)
+# 2021.2.8  [978. 最长湍流子数组](https://leetcode-cn.com/problems/longest-turbulent-subarray/)
 
 **使用了动态规划算法。**
 
@@ -147,7 +141,7 @@ else nums[index] = nums[index-1];
    }
    ```
 
-### 2021.2.9 [992. K 个不同整数的子数组](https://leetcode-cn.com/problems/subarrays-with-k-different-integers/)
+# 2021.2.9 [992. K 个不同整数的子数组](https://leetcode-cn.com/problems/subarrays-with-k-different-integers/)
 
 给定一个正整数数组 `A`，如果 `A` 的某个子数组中不同整数的个数**恰好**为 `K`，则称 `A` 的这个连续、不一定独立的子数组为好子数组。
 
@@ -239,7 +233,7 @@ int func2(vector<int>&A,int K){
 return func2(A,K)-func2(A,K-1);
 ```
 
-### 2021.2.9 [209. 长度最小的子数组](https://leetcode-cn.com/problems/minimum-size-subarray-sum/)
+# 2021.2.9 [209. 长度最小的子数组](https://leetcode-cn.com/problems/minimum-size-subarray-sum/)
 
 标准的使用滑动窗口法，窗口移动的规则为：
 
@@ -261,7 +255,7 @@ while (right<nums.size()){
         }
 ```
 
-### 2021.2.9 [3. 无重复字符的最长子串](https://leetcode-cn.com/problems/longest-substring-without-repeating-characters/)
+2021.2.9 [3. 无重复字符的最长子串](https://leetcode-cn.com/problems/longest-substring-without-repeating-characters/)
 
 标准的使用滑动窗口法，窗口移动的规则为：
 
@@ -281,7 +275,7 @@ while (right<s.size()){
         return length;
 ```
 
-### 2021.2.10 [567. 字符串的排列](https://leetcode-cn.com/problems/permutation-in-string/)
+# 2021.2.10 [567. 字符串的排列](https://leetcode-cn.com/problems/permutation-in-string/)
 
 一般进行这样的匹配的题目，通常的做法是初始化一个用来存储一共会出现的字符的次数的数组或者map，`map可以设计成{出现的字符:出现的次数}`这样的结构，但是map的操作比较费内存和时间，用数组替代可能更好一点。**对于这类匹配的题目，关键要搞清楚什么时候应该对窗口大小进行修改。**
 
@@ -308,7 +302,7 @@ while(right < size2){
 else return false;
 ```
 
-### [重点]2021.2.11 [703. 数据流中的第 K 大元素](https://leetcode-cn.com/problems/kth-largest-element-in-a-stream/)
+# [重点]2021.2.11 [703. 数据流中的第 K 大元素](https://leetcode-cn.com/problems/kth-largest-element-in-a-stream/)
 
 想法是在初始化`KthLargest`的时候就直接先找出前K大的所有元素，放在一个`set`或者一个`vector`里面，所以这个问题就转换成了设计一个合理的容器出来，**后来发现有一个叫做`priority_queue`的容器可以完美的解决这个问题(https://en.cppreference.com/w/cpp/container/priority_queue)，关于`priority_queue`的实现可以看数据结构的`heap`相关。**
 
@@ -330,7 +324,7 @@ int add(int val) {
 //内存消耗：19.4 MB, 在所有 C++ 提交中击败了69.98%的用户
 ```
 
-### 2021.2.12 [119. 杨辉三角 II](https://leetcode-cn.com/problems/pascals-triangle-ii/)
+# 2021.2.12 [119. 杨辉三角 II](https://leetcode-cn.com/problems/pascals-triangle-ii/)
 
 由于杨辉三角只和当前这一行以及上一行油有关，可以设计一个二维的`vector`存储元素
 
@@ -368,7 +362,7 @@ vector<int> getRow2(int rowIndex){
 }
 ```
 
-### 2021.2.13 [136. 只出现一次的数字](https://leetcode-cn.com/problems/single-number/)
+# 2021.2.13 [136. 只出现一次的数字](https://leetcode-cn.com/problems/single-number/)
 
 很神奇，利用了**异或**的性质。
 
@@ -385,7 +379,7 @@ int singleNumber2(vector<int>nums)  {
 }
 ```
 
-### 2021.2.13 [448. 找到所有数组中消失的数字](https://leetcode-cn.com/problems/find-all-numbers-disappeared-in-an-array/)
+# 2021.2.13 [448. 找到所有数组中消失的数字](https://leetcode-cn.com/problems/find-all-numbers-disappeared-in-an-array/)
 
 首先注意题目中的两个关键点：
 
@@ -435,7 +429,7 @@ for(int i=0;i<nunms.size();++i){
 }
 ```
 
-### 2021.2.14 [765. 情侣牵手](https://leetcode-cn.com/problems/couples-holding-hands/)
+# 2021.2.14 [765. 情侣牵手](https://leetcode-cn.com/problems/couples-holding-hands/)
 
 1. 首先，题目给定了N对couples，那么一定是可以完成配对的；
 2. couples的初始化位置不对，需要还原成couples的正确位置
@@ -462,7 +456,7 @@ for (auto it = row.begin();it!=row.end();it=it+2) {
 return res;
 ```
 
-### 2021.2.14 [5676. 生成交替二进制字符串的最少操作数](https://leetcode-cn.com/problems/minimum-changes-to-make-alternating-binary-string/)
+# 2021.2.14 [5676. 生成交替二进制字符串的最少操作数](https://leetcode-cn.com/problems/minimum-changes-to-make-alternating-binary-string/)
 
 这个题目对应的交替二进制字符串只有两种情况，一种是`01010101……`，一种是`10101010……`
 
@@ -483,7 +477,7 @@ int minOperations(string s) {
 }
 ```
 
-### 2021.2.15 [485. 最大连续1的个数](https://leetcode-cn.com/problems/max-consecutive-ones/)
+# 2021.2.15 [485. 最大连续1的个数](https://leetcode-cn.com/problems/max-consecutive-ones/)
 
 1. 通过遍历数组，如果是1，就count++，如果不是1，就比较一次当前的count和之前的maxcount谁更大，最后遍历完了之后再比较一次
 
@@ -524,7 +518,7 @@ int findMaxConsecutiveOnes2(vector<int>& nums) {
 
 **发现把`std::max`改成`max`后用时和内存都有所下降，推测原因如下：因为`std::max`定义为`template`编程，适用于所有的数据类型，所以`std::max`相比`max`具有普适性，但是同样由于这个原因，用时可能会更久，所以如果是同样的数据类型，用`max`可能更好一点**
 
-### 2021.2.16 [561. 数组拆分 I](https://leetcode-cn.com/problems/array-partition-i/)
+# 2021.2.16 [561. 数组拆分 I](https://leetcode-cn.com/problems/array-partition-i/)
 
 观测题目中给的数据，如果分拆后的数组的和有最大值的话，必须要对数组进行排序，然后令数组每两个组成一个新的小数组
 
@@ -540,7 +534,7 @@ int arrayPairSum(vector<int>& nums) {
 }
 ```
 
-### 2021.2.17 [566. 重塑矩阵](https://leetcode-cn.com/problems/reshape-the-matrix/)
+# 2021.2.17 [566. 重塑矩阵](https://leetcode-cn.com/problems/reshape-the-matrix/)
 
 实现matlab的`reshape()`函数，两个知识点：
 
@@ -563,18 +557,18 @@ vector<vector<int>> matrixReshape(vector<vector<int>>& nums, int r, int c) {
 }
 ```
 
-### 2021.2.17 [4. 寻找两个正序数组的中位数](https://leetcode-cn.com/problems/median-of-two-sorted-arrays/)
+# 2021.2.17 [4. 寻找两个正序数组的中位数](https://leetcode-cn.com/problems/median-of-two-sorted-arrays/)
 
 1. 最简单的方法：合并两个`vector`，然后从中转换为topk的问题
 2. 二分查找
 
 
 
-### 2021.2.18 [1759. 统计同构子字符串的数目](https://leetcode-cn.com/problems/count-number-of-homogenous-substrings/)
+# 2021.2.18 [1759. 统计同构子字符串的数目](https://leetcode-cn.com/problems/count-number-of-homogenous-substrings/)
 
 大数乘法溢出的问题，当`count=100000`的时候，发现`count*(count+1)`总是会溢出，当两个同种类型的数据进行乘法计算的话，得出来的结果会首先保存在同类型的空间中，哪怕溢出了也会先保存在同类型的空间中，然后再copy到结果中。所以为了避免溢出的情况，优先把`count*(count+1)`计算一下，看一下大小以及用什么类型存储，然后将结果、count都设置为指定类型的数据。
 
-### [重点]2021.2.18 [995. K 连续位的最小翻转次数](https://leetcode-cn.com/problems/minimum-number-of-k-consecutive-bit-flips/)
+# [重点]2021.2.18 [995. K 连续位的最小翻转次数](https://leetcode-cn.com/problems/minimum-number-of-k-consecutive-bit-flips/)
 
 1. [差分数组](https://blog.csdn.net/JingleLiA/article/details/108730954)的应用，对于这样的有可能是大规模数据的数组，要对数组中的区间进行频繁修改，如果一直修改的复杂度是`O(n*k)`，但是如果是改用差分数组的复杂度为常数`O(k)`。而差分数组的修改在于`diff[i]++,diff[i+k]--`
 2. 用`int`实现二进制的加减法，使用异或`^`符号，比如`int 1+1 = 0, 1+0=1,0+0=0`，恰好符合异或算法
@@ -633,7 +627,7 @@ int minKBitFlips2(vector<int>& A, int K) {
 }
 ```
 
-### 2021.2.18 [984. 不含 AAA 或 BBB 的字符串](https://leetcode-cn.com/problems/string-without-aaa-or-bbb/)
+# 2021.2.18 [984. 不含 AAA 或 BBB 的字符串](https://leetcode-cn.com/problems/string-without-aaa-or-bbb/)
 
 从个数多的开始填入，满足下列要求：
 
@@ -661,7 +655,7 @@ string strWithout3a3b(int a, int b) {
     return item;
 ```
 
-### 2021.2.19 [1004. 最大连续1的个数 III](https://leetcode-cn.com/problems/max-consecutive-ones-iii/)
+# 2021.2.19 [1004. 最大连续1的个数 III](https://leetcode-cn.com/problems/max-consecutive-ones-iii/)
 
 典型的滑动窗口法，首先确定我们需要寻找的条件
 
@@ -735,7 +729,7 @@ def findSubArray(nums):
     return res
 ```
 
-### 2021.2.19 [66.加一](https://leetcode-cn.com/problems/plus-one/)
+# 2021.2.19 [66.加一](https://leetcode-cn.com/problems/plus-one/)
 
 很有意思的一道题目，正常想法如下：
 
@@ -777,7 +771,7 @@ vector<int> plusOne(vector<int>& digits) {
     }
 ```
 
-### 2021.2.19 [28. 实现 strStr()](https://leetcode-cn.com/problems/implement-strstr/)
+# 2021.2.19 [28. 实现 strStr()](https://leetcode-cn.com/problems/implement-strstr/)
 
 很有意思的一个题目，有很多边界条件
 
@@ -809,7 +803,7 @@ public:
 };
 ```
 
-### 2021.2.20 [697. 数组的度](https://leetcode-cn.com/problems/degree-of-an-array/)
+# 2021.2.20 [697. 数组的度](https://leetcode-cn.com/problems/degree-of-an-array/)
 
 ```c++
 int findShortestSubArray(vector<int>& nums) {
@@ -846,8 +840,8 @@ int findShortestSubArray(vector<int>& nums) {
 
 可以优化的地方：
 
-1. map改用unordered_map，因为unordered_map使用hash表而map使用的是红黑树，unordered_map的查找为O(1)
-2. map中的value从vector改成数组降低内存消耗
+1. `map`改用`unordered_map`，因为`unordered_map`使用`hash`表而map使用的是红黑树，`unordered_map`的查找为O(1)
+2. `map`中的`value`从`vector`改成数组降低内存消耗
 
 ```c++
 int findShortestSubArray(vector<int>& nums) {
@@ -875,3 +869,105 @@ int findShortestSubArray(vector<int>& nums) {
     return ret;
 }
 ```
+
+# 2021.2.21 [1438. 绝对差不超过限制的最长连续子数组](https://leetcode-cn.com/problems/longest-continuous-subarray-with-absolute-diff-less-than-or-equal-to-limit/)
+
+分析可以使用滑动窗口的方法实现，但是关键在于怎么在窗口内部求出哪个是最小的元素哪个是最大的元素，因为每次收缩窗口之后都要重新求出最大值和最小值，所以为了方便处理可以认为窗口内部是`sorted`的，并且由于有重复的元素，所以使用`multiset`实现。
+
+```c++
+int longestSubarray(vector<int>& nums, int limit) {
+        int ret = 0, left = 0, right = left;
+        multiset<int> windows{};
+        while(right!=nums.size()){
+            //每次扩张之后加入新的元素到窗口中
+            windows.insert(nums[right]);
+            //由于窗口使排序好了的，所以begin就是最小的，rbegin就是最大的
+            while(*(windows.rbegin())-*windows.begin() > limit){
+                //如果这个时候窗口不符合要求，就收缩窗口直到符合要求
+                //收缩的时候不断的抹去窗口丢掉的那个元素
+                windows.erase(windows.find(nums[left]));
+                ++left;
+            }
+            ret = std::max(ret,right-left+1);
+            ++right;
+        }
+        return ret;
+    }
+```
+
+**如果要访问最后一个元素，由于`end`访问的是尾后元素，所以不太合适，换成`rbegin`可以很好的解决这个问题**
+
+可以优化的点：关键在于怎么每次更新之后获取`windows`内部的最大值和最小值，用`multiset`的`insert`和`find`还有`erase`几个操作的确有点费时间内存
+
+# [重点,动态规划]2021.2.21 [5687. 执行乘法运算的最大分数](https://leetcode-cn.com/problems/maximum-score-from-performing-multiplication-operations/)
+
+首先先暴力求解，找到状态转移方程。假设从`nums`左边取出`i`个元素，右边取出`j`个元素，那么如果我想知道在这种情况下怎样才能得到最优解，可以转换为两个子方程
+
+1. 从`nums`左边取`i-1`个元素，右边取出`j`个元素，然后再从左边取出1个元素,这时左边这个元素的坐标为`mul[i-1]`；
+2. 从`nums`左边取`i`个元素，右边取出`j-1`个元素，然后再从右边取出1个元素，这时右边这个元素的坐标为`mul[nums.size()-j]`；
+
+然后找到这两个中最大的那一个就是当前的最优解。
+
+注意特殊情况：
+
+1. 如果求左边取出0个，右边取出x(x>1)个，那么就是进入左边取出-1个的方程，这里通过取出个数是否小于0判断，如果小于0，就返回INIT_MIN；
+2. 左边取出0个，右边取出1个，那么直接放回边界条件`nums[nums.size()-1]*mul[0]`
+3. 左边取出1个，右边取出0个，那么直接放回边界条件`nums[0]*mul[0]`
+4. 如果返回的值是INIT_MIN，也就是说子状态越界了，那么不管他，因为最后进行`std::max`比较的时候会忽略的。
+
+```c++
+int dp(int x,int y,vector<int>& aa,vector<int>& bb,vector<vector<int>>& table){
+    if(x<0 || y<0)return INT32_MIN;
+    else if(x==0 && y==1)return aa[aa.size()-1]*bb[0];
+    else if(x==1 && y==0)return aa[0]*bb[0];
+    else if(table[x][y] != -1)return table[x][y];
+    else{
+        int item1 = dp(x-1,y,aa,bb,table);
+        if(item1==INT32_MIN);
+        else item1 =  item1 + aa[x-1]*bb[x+y-1];
+        int item2 = dp(x,y-1,aa,bb,table);
+        if(item2==INT32_MIN);
+        else item2 = item2 + aa[aa.size()-y]*bb[x+y-1];
+        table[x][y] = std::max(item1,item2);
+        return table[x][y];
+    }
+}
+
+int main(){
+    vector<int> a{-5,-3,-3,-2,7,1};
+    vector<int> b{-10,-5,3,4,6};
+    int max = INT32_MIN;
+    //把vector改成数组后内存消耗会得到很大的提升！！！
+    vector<vector<int>>dptable(1001,vector<int>(1001,-1));
+    for ( std::size_t i = 1,j = b.size()-i; i < b.size(); ++i,--j ) {
+        max = std::max(max,dp(i,j,a,b,dptable));
+    }
+    std::cout<<max<<std::endl;
+}
+```
+
+在main函数里面相当于计算了当左边取出1个，右边取出m-1个元素时的最优解；然后左边2个……这样的遍历过程，是从顶向下的计算方法，所以需要用到递归，因为需要保存顶层的数据，但是反过来，为了求得顶层，我们必须先递归到底层先计算出底层的数据，所以可以优化成先计算底层的数据，然后由底向上计算。
+
+比如：在计算左边取出1个右边取出4个的最优解，我们要先计算左边取出1个右边取出3个和左边取出0个右边取出4个的子方程，因此我们可以先计算最底层左边取出0个右边取出1个，左边取出1个右边取出0个，然后依次向上。
+
+```c++
+class Solution {
+public:
+    int maximumScore(vector<int>& nums, vector<int>& multipliers) {
+        int dp[1005][1005];
+        int n=nums.size(),m=multipliers.size(),ans=-2e9;
+        for(int i=0;i<=m;i++)for(int j=0;j<=m;j++)dp[i][j]=-2e9;
+        
+        dp[0][0]=0;
+        for(int i=0;i<=m;i++){
+            for(int j=0;i+j<=m;j++){
+                if(i>0)dp[i][j]=max(dp[i][j],dp[i-1][j]+nums[i-1]*multipliers[i+j-1]);
+                if(j>0)dp[i][j]=max(dp[i][j],dp[i][j-1]+nums[n-j]*multipliers[i+j-1]);
+            }
+            ans=max(ans,dp[i][m-i]);
+        }
+        return ans;
+    }
+};
+```
+
