@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-02-21 16:54:41
- * @LastEditTime: 2021-02-21 22:05:22
+ * @LastEditTime: 2021-02-22 18:20:40
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \leetcode\5687. 执行乘法运算的最大分数\main.cpp
@@ -33,13 +33,13 @@ public:
             {
                 if(i>0)dp[i][j] = std::max(dp[i][j],dp[i-1][j]+nums[i-1]*multipliers[i+j-1]);
                 if(j>0)dp[i][j] = std::max(dp[i][j],dp[i][j-1]+nums[m-j]*multipliers[i+j-1]);
-                ret = std::max(ret,dp[i][j]);
+                
             }
-            
+            ret = std::max(ret,dp[i][m-i]);
         }
         return ret;
     }
-}
+};
 
 int dp(int x,int y,vector<int>& aa,vector<int>& bb,vector<vector<int>>& table){
     if(x<0 || y<0)return INT32_MIN;

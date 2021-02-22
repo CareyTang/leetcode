@@ -31,6 +31,7 @@
 - [2021.2.20 697. 数组的度](#2021220-697-数组的度)
 - [2021.2.21 1438. 绝对差不超过限制的最长连续子数组](#2021221-1438-绝对差不超过限制的最长连续子数组)
 - [[重点,动态规划]2021.2.21 5687. 执行乘法运算的最大分数](#重点动态规划2021221-5687-执行乘法运算的最大分数)
+- [2021.2.22 149. 直线上最多的点数](#2021222-149-直线上最多的点数)
 # 2021.2.2 424-替换后的最长重复字符
 
 使用了`std::max`替代了`max_element`，用时4ms(98.16%)，内存6.9mb(93.17%)
@@ -967,6 +968,57 @@ public:
             ans=max(ans,dp[i][m-i]);
         }
         return ans;
+    }
+};
+```
+
+# 2021.2.22 [149. 直线上最多的点数](https://leetcode-cn.com/problems/max-points-on-a-line/)
+
+每个点依次遍历，求这个点和其他的点的斜率，并且将斜率存到一个map里面，map中value最大的就是出现次数最多的线。
+
+几个关键点：
+
+1. 有重复的点要处理；
+2. LeetCode中有一个测试案例需要用`long double`才行
+
+```c++
+class Solution {
+public:
+    int maxPoints(vector<vector<int>>& points) {
+        if (points.size() < 3) {
+            return points.size();
+        }
+        int retFinal = 0,i,j;
+        for(j = 0;j<points.size();++j){
+            vector<int> start = points[j];
+            unordered_map<long double,int> k{};
+            int repeatedNum = 0, ret = 0;
+            for ( i = j+1; i < points.size(); ++i ) {
+                if(points[i][0]==start[0] && points[i][1]==start[1]) {
+                    repeatedNum++;
+                }
+                else if(points[i][0]==start[0]) {
+                    if(k.find(INT32_MIN)==k.end())k[INT32_MIN]+=2;
+                    else k[INT32_MIN]++;
+                    ret = std::max(ret,k[INT32_MIN]);
+                }
+                else{
+                    int dy = (points[i][1]-start[1]);
+                    int dx = (points[i][0]-start[0]);
+                    long double item = static_cast<long double> (dy)/dx;
+                    if(k.find(item)==k.end())k[item]+=2;
+                    else k[item]++;
+                    ret = std::max(ret,k[item]);
+                }
+            }
+            //如果没有重复的，ret就是真实的值
+            if(repeatedNum==0)retFinal = std::max(retFinal,ret);
+            //如果有个别重复的，那么返回ret+repeatedNum
+            else if(repeatedNum!=(i-j-1)) retFinal = std::max(ret+repeatedNum,retFinal);
+            //如果全部都是重复的，那么返回repeatNum+1
+            else retFinal = std::max(retFinal,repeatedNum+1);
+        }
+        return  retFinal;
     }
 };
 ```
