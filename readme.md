@@ -1078,3 +1078,38 @@ int maxSatisfied(vector<int>& customers, vector<int>& grumpy, int X) {
 }
 ```
 
+# 2021.2.23 [1763. 最长的美好子字符串](https://leetcode-cn.com/problems/longest-nice-substring/)
+
+最简单的做法就是暴力遍历，每次遇到一个字符，就将这个字符出现的次数存到对应的数组里面去，如果是大写就存入到`upper`，小写就存入到`lower`。然后再遍历`lower`和`upper`，如果两个数组对应的元素都为1，那就表示这个到现在为止字符串中既有大写的也有小写的，满足要求，而一但出现两个数组不想等了，那就说明不满足要求了。对于这样的相等与不相等的，可以使用异或进行判断。
+
+```c++
+string longestNiceSubstring(string s) {
+    int size = s.length(),start=0,length=0;
+    for(int i = 0; i < size; ++i){
+        //用vector存储，关键在于每次遍历完了之后都要清零，用数组清零需要遍历，不太方便
+        vector<int> upper(26,0),lower(26,0);
+        for(int j = i; j < size; ++j){
+            //遍历向lower和upper添加是否出现
+            if(s[j]<='z' && s[j]>='a')lower[s[j]-'a']=1;
+            else upper[s[j]-'A']=1;
+            
+            //遍历lower和upper看是否符合要求
+            int ok=1;
+            for(int x=0;x<26;++x){
+                //只要有一个字母不符合要求，就可以结束循环了
+                if(upper[x] ^ lower[x]){
+                    ok=0;
+                    break;
+                }
+            }
+            if(ok){
+                if(j-i+1>length){
+                    start=i;
+                    length=j-i+1;
+                }
+            }
+        }
+    }
+    return s.substr(start,length);
+}
+```
