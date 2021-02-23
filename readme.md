@@ -32,6 +32,7 @@
 - [2021.2.21 1438. 绝对差不超过限制的最长连续子数组](#2021221-1438-绝对差不超过限制的最长连续子数组)
 - [[重点,动态规划]2021.2.21 5687. 执行乘法运算的最大分数](#重点动态规划2021221-5687-执行乘法运算的最大分数)
 - [2021.2.22 149. 直线上最多的点数](#2021222-149-直线上最多的点数)
+- [2021.2.23 1052. 爱生气的书店老板](#2021223-1052-爱生气的书店老板)
 # 2021.2.2 424-替换后的最长重复字符
 
 使用了`std::max`替代了`max_element`，用时4ms(98.16%)，内存6.9mb(93.17%)
@@ -1021,5 +1022,59 @@ public:
         return  retFinal;
     }
 };
+```
+
+# 2021.2.23 [1052. 爱生气的书店老板](https://leetcode-cn.com/problems/grumpy-bookstore-owner/)
+
+通过建立一个长度为`X`的窗口滑动，那么一共满意的`customers`就是窗口内所有的`customers`+窗口外所有的满意的。
+
+所以最初的想法是通过暴力计算的方法，两个`for`循环，第一个`for`循环记录窗口开始的位置，第二个`for`循环遍历每个顾客是否满意。
+
+```c++
+int maxSatisfied(vector<int>& customers, vector<int>& grumpy, int X) {
+        int ret = INT32_MIN;
+        for(int start = 0; start <= customers.size()-X;++start){
+            int end = start + X - 1, temp = 0;
+            for(int i = 0;i<customers.size();++i){
+                if(i>=start && i<=end)temp+=customers[i];
+                else{
+                    if(grumpy[i]==0)temp+=customers[i];
+                }
+            }
+            ret = max(ret,temp);
+        }
+        return ret;
+    }
+```
+
+但是会发现这样超时了，因为每次计算窗口外面的满意的人的时候都有大量的重复计算，可以进行简化。
+
+观察第二个`for`循环内，我们每次都要从头到尾遍历所有本来就满意的顾客，那我们可以最初初始化的时候就将提前遍历一次，将所有满意的顾客都存下来，**然后在窗口内只要计算那些原本不满意的就行了。这样题目就变成计算窗口内不满意顾客最多的人数。**
+
+这样就可以通过滑动窗口法，但是这里的滑动窗口的长度是固定的，那么什么时候窗口应该滑动呢？也就是当窗口的长度等于X的时候，我们就该移动窗口了。
+
+```c++
+int maxSatisfied(vector<int>& customers, vector<int>& grumpy, int X) {
+    int ret = INT32_MIN,size = grumpy.size(),happy{};
+    int start = 0, end = 0;
+    //遍历获取本来就满意的顾客
+    for(int i = 0; i<size; ++i)happy+=(1-grumpy[i])*customers[i];
+    //开始滑动窗口
+    while(end<size){
+        //一但窗口长度等于X了，就说明此时我们需要平移窗口了，此时收缩最左边的start，减去start对应的happy的值
+        //然后扩张end，加上end对应的happy的值，这样一收缩一扩展就完成了平移。
+        //注意这里的比较是end-start==X，因为我是先收缩再扩张，里面已经有X个元素，收缩后X-1个，扩张回来
+        if(end-start==X){
+            happy-=grumpy[start]*customers[start];
+            ++start;
+        }
+       	//当窗口还不够长的时候，向右滑动扩张，因为我们只需要获取grumpy[end]=1
+        //也就是不开心的顾客，老板让他开心了所以要加到总和里面去
+        happy+=grumpy[end]*customers[end];
+        ++end;
+        ret = std::max(ret,happy);
+    }
+    return ret;
+}
 ```
 
