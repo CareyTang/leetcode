@@ -1114,3 +1114,39 @@ string longestNiceSubstring(string s) {
     return s.substr(start,length);
 }
 ```
+
+# 2021.2.24 [4. 寻找两个正序数组的中位数](https://leetcode-cn.com/problems/median-of-two-sorted-arrays/)
+
+朴素的做法就是用两个指针寻找中位数，但是要注意遍历的时候的停止条件，以及一些特殊情况。
+
+中位数的判断：如果一共奇数个数(`size`)，那么中位数就是第`size/2`个数；如果一共偶数个数，那么中位数就是第`size/2-1`和`size/2`个数。所以我们如果从下标为0开始遍历，那么一共需要遍历`size/2+1`次。考虑到偶数的时候需要两个数据，所以设置一个left存储上次遍历时的数据，right记录这次的数据。
+
+1. 假如有数组是空的，那么就直接返回另一个数组的中位数；
+2. 如果两个数组都不是空的，那么依次遍历，当两个下标都没越界的时候，比较两个下标对应的数，把小的那个++，只要有一个下标越界了，但是整体遍历还没有结束，那就++另一个下标
+
+所以代码为：
+
+```c++
+double findMedianSortedArrays(vector<int>& nums1, vector<int>& nums2) {
+    std::size_t size = nums1.size()+nums2.size(),size1 = nums1.size(),size2 = nums2.size();
+    int count = 0,left = INT32_MIN, right = INT32_MIN;
+    int index1 = 0, index2 = 0;
+    //如果有空数组的处理
+    if(nums1.empty())return (static_cast<double>(nums2[(size2-1)/2]+nums2[size2/2])/2);
+    else if(nums2.empty())return (static_cast<double>(nums1[(size1-1)/2]+nums1[size1/2])/2);
+    //开始遍历
+    while(count<size/2+1){
+        //存储上次记录的数据，必须放在right赋值的前面，否则left会被当次数据覆盖
+        left = right;
+        if( (index2<nums2.size()&&index1<nums1.size()&&nums1[index1]<=nums2[index2]) || index2>=nums2.size() ){
+            right = nums1[index1];
+            ++index1;
+        }else if((index2<nums2.size()&&index1<nums1.size()&&nums1[index1]>nums2[index2]) || index1>=nums1.size()){
+            right = nums2[index2];
+            ++index2;
+        }
+        ++count;
+    }
+    return size%2==1?right: (static_cast<double>(right)+left)/2;
+}
+```
