@@ -1201,7 +1201,7 @@ double findMedianSortedArrays(vector<int>& nums1, vector<int>& nums2) {
    }
    ```
 
-最后的效率为下图，不太理想，因为调用了递归，需要大量的空间，并且计算量太复杂了。![image-20210227205203131](C:\Users\jiawei tang\AppData\Roaming\Typora\typora-user-images\image-20210227205203131.png)
+最后的效率为`12ms,15.5mb`，不太理想，因为调用了递归，需要大量的空间，并且计算量太复杂了。
 
 2. 注意上面的递归的方法，我们一共进行了2^3=8次抉择，每次往`ret`里面加入一个数据，这里我们思考一下`0~7`这8个数的二进制，也就是`000~111`，如果我们用某一位为1表示子集中含有该下标对应的数字，那么`101`表示子集为`{3,1}`。所以我们只需要遍历`000~111`这8种情况就行了。
 
@@ -1234,11 +1234,7 @@ double findMedianSortedArrays(vector<int>& nums1, vector<int>& nums2) {
    }
    ```
 
-效果为下图，很理想。![image-20210227210718360](C:\Users\jiawei tang\AppData\Roaming\Typora\typora-user-images\image-20210227210718360.png)
-
-
-
-
+效果为下图，很理想。`0~4ms,6.9mb`
 
 # 2021.2.27 [395. 至少有 K 个重复字符的最长子串](https://leetcode-cn.com/problems/longest-substring-with-at-least-k-repeating-characters/)
 
