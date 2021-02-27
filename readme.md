@@ -1151,3 +1151,91 @@ double findMedianSortedArrays(vector<int>& nums1, vector<int>& nums2) {
     return size%2==1?right: (static_cast<double>(right)+left)/2;
 }
 ```
+
+# 2021.2.27 [1178. 猜字谜](https://leetcode-cn.com/problems/number-of-valid-words-for-each-puzzle/)
+
+# 2021.2.27 [78. 子集](https://leetcode-cn.com/problems/subsets/)
+
+很有意思的一道题，也是很考验技术的一道题。有两个方法，一个递归，一个数学方法。
+
+1. 递归
+
+   ![E2C55933-0D86-4F8E-82B9-430682B5B099.png](https://pic.leetcode-cn.com/1613704529-qfwaRN-E2C55933-0D86-4F8E-82B9-430682B5B099.png)
+
+   从这个图片可以看出来，我们依次遍历整个`nums`，每次选择从`nums`中放入或者不放一个数，因此`nums.size()`就是一共要进行多少次抉择，这里`nums=3`，所以一共要进行2^3=8次抉择，所以最后会有8个子集。
+
+   根据这张图，我们可以看出，如果要实现这样一个抉择，我们需要使用递归的方法，因此这里我们先假设一个函数`void dfs()`，我们来看看这个函数需要什么。
+
+   1. 函数需要`nums`，以及当前需要进行抉择的那个数字，这里我们选择使用这个数字的下标`index`；
+   2. 函数需要一个返回的值，考虑到我们到最底层才返回，不能每次都返回，我们可以用一个公共空间存储，所以我们设置一个`vector<vector<int>>& ret`作为最后的返回的结果；
+   3. 每次我们做抉择的时候，我们都需要在上次抉择完了的基础上继续做抉择，所以我们需要一个存储上次抉择完的结果的变量，也是一个`vector<int> current` 。
+
+   所以我们可以设置这个函数为`void dfs(vector<int>& nums,int index,vector<int> current,vector<vector<int>>& ret)`，再观察退出条件，我们只需要存储最底层的数据，因此只要到达最底层了我们就向`ret`里面添加一次结果，判断底层的条件为：`index?=nums.size()`，当我们做最后一次抉择时，`index=2`，做完之后`index=index+1=3`，这个时候恰好等于`nums.size()`。
+
+   抉择的设置：当我们需要进行抉择的时候，我们有两个选择：
+
+   1. 不加入当前`index`的元素，直接`index++`进入下一个抉择；
+   2. 加入当前元素，也就是`current.push_back(nums[index])`，然后`index++`进入下一个抉择。
+
+   所以代码可以写成：
+
+   ```c++
+   vector<vector<int>> subsets(vector<int>& nums) {
+      vector<vector<int>> ret{};
+      vector<int> current{};
+      dfs(nums,0,current,ret);
+      return ret;
+      }
+   
+      void dfs(vector<int>& nums,int index,vector<int> current,vector<vector<int>>& ret){
+      if(index==nums.size()){
+          ret.push_back(current);
+              return;
+      }
+      dfs(nums,index+1,current,ret);
+      current.push_back(nums[index]);
+      dfs(nums,index+1,current,ret);
+   }
+   ```
+
+最后的效率为下图，不太理想，因为调用了递归，需要大量的空间，并且计算量太复杂了。![image-20210227205203131](C:\Users\jiawei tang\AppData\Roaming\Typora\typora-user-images\image-20210227205203131.png)
+
+2. 注意上面的递归的方法，我们一共进行了2^3=8次抉择，每次往`ret`里面加入一个数据，这里我们思考一下`0~7`这8个数的二进制，也就是`000~111`，如果我们用某一位为1表示子集中含有该下标对应的数字，那么`101`表示子集为`{3,1}`。所以我们只需要遍历`000~111`这8种情况就行了。
+
+   由于每次我们只需要检查一位是否为1，所以我们用`bit masks`，然后每次令被检查的数向右移一位，然后再次检查即可。
+
+   所以代码为：
+
+   ```c++
+   vector<vector<int>> subsets2(vector<int>& nums) {
+   	vector<vector<int>> ret{};
+   	vector<int> current{};
+       //一共2^n种情况
+   	for(int i=0;i<std::pow(2,nums.size());++i){
+           //用item保存当前的i值，防止因为后续操作改变i导致死循环
+   	    int item = i,index = 0;
+           //如果什么都不加入，就是空子集
+   		vector<int>temp{};
+           //只要item还存在就要继续，直到item==0
+   		while(item){
+               //对item的最低位进行判断，如果最低位存在，就加入index对应的数
+               if(item & 0x1)temp.push_back(nums[index]);
+               //然后item>>1，同时index++表示我们打算取下一个数
+               item=item>>1;
+               ++index;
+   		}
+   		ret.push_back(temp);
+   		
+   	}
+   	return ret;
+   }
+   ```
+
+效果为下图，很理想。![image-20210227210718360](C:\Users\jiawei tang\AppData\Roaming\Typora\typora-user-images\image-20210227210718360.png)
+
+
+
+
+
+# 2021.2.27 [395. 至少有 K 个重复字符的最长子串](https://leetcode-cn.com/problems/longest-substring-with-at-least-k-repeating-characters/)
+
