@@ -35,9 +35,9 @@
 - [2021.2.23 1052. 爱生气的书店老板](#2021223-1052-爱生气的书店老板)
 - [2021.2.23 1763. 最长的美好子字符串](#2021223-1763-最长的美好子字符串)
 - [2021.2.24 4. 寻找两个正序数组的中位数](#2021224-4-寻找两个正序数组的中位数)
-- [2021.2.27 1178. 猜字谜](#2021227-1178-猜字谜)
 - [2021.2.27 78. 子集](#2021227-78-子集)
-- [2021.2.27 395. 至少有 K 个重复字符的最长子串](#2021227-395-至少有-k-个重复字符的最长子串)
+- [2021.2.27 1178. 猜字谜](#2021227-1178-猜字谜)
+- [2021.2.28 5690. 最接近目标价格的甜点成本](#2021228-5690-最接近目标价格的甜点成本)
 # 2021.2.2 424-替换后的最长重复字符
 
 使用了`std::max`替代了`max_element`，用时4ms(98.16%)，内存6.9mb(93.17%)
@@ -1155,8 +1155,6 @@ double findMedianSortedArrays(vector<int>& nums1, vector<int>& nums2) {
 }
 ```
 
-# 2021.2.27 [1178. 猜字谜](https://leetcode-cn.com/problems/number-of-valid-words-for-each-puzzle/)
-
 # 2021.2.27 [78. 子集](https://leetcode-cn.com/problems/subsets/)
 
 很有意思的一道题，也是很考验技术的一道题。有两个方法，一个递归，一个数学方法。
@@ -1203,7 +1201,7 @@ double findMedianSortedArrays(vector<int>& nums1, vector<int>& nums2) {
 
 最后的效率为`12ms,15.5mb`，不太理想，因为调用了递归，需要大量的空间，并且计算量太复杂了。
 
-2. 注意上面的递归的方法，我们一共进行了2^3=8次抉择，每次往`ret`里面加入一个数据，这里我们思考一下`0~7`这8个数的二进制，也就是`000~111`，如果我们用某一位为1表示子集中含有该下标对应的数字，那么`101`表示子集为`{3,1}`。所以我们只需要遍历`000~111`这8种情况就行了。
+2. 注意上面的递归的方法，我们一共进行了2^3=8次抉择，每次往`ret`里面加入一个数据，这里我们思考一下`0~7`这8个数的二进制，也就是`000~111`，如果我们用某一位为1表示子集中含有该下标对应的数字，那么`101`表示子集为`{3,1}`。所以我们只需要遍历`000~111`这8种情况就行了。详情可以参考这篇文章：https://cp-algorithms.com/algebra/all-submasks.html
 
    由于每次我们只需要检查一位是否为1，所以我们用`bit masks`，然后每次令被检查的数向右移一位，然后再次检查即可。
 
@@ -1234,7 +1232,169 @@ double findMedianSortedArrays(vector<int>& nums1, vector<int>& nums2) {
    }
    ```
 
-效果为下图，很理想。`0~4ms,6.9mb`
+效果很理想。`0~4ms,6.9mb`
 
-# 2021.2.27 [395. 至少有 K 个重复字符的最长子串](https://leetcode-cn.com/problems/longest-substring-with-at-least-k-repeating-characters/)
+# 2021.2.27 [1178. 猜字谜](https://leetcode-cn.com/problems/number-of-valid-words-for-each-puzzle/)
 
+首先想到的是暴力法：遍历`puzzles`，对每个`puzzle`，遍历所有的`words`，看是否符合条件。因为`words`只需要记录出现的字母，所以将`word`转换为`set`，但是这个方法超时了。因为两个`for`循环中`words.length=10^5`，而`puzzles.length=10^4`，所以这里就到了`10^9`的复杂度。所以问题就变成，我们能不能化简这个操作。
+
+```c++
+vector<int> findNumOfValidWords(vector<string>& words, vector<string>& puzzles) {
+    vector<int> ret(puzzles.size(), 0);
+    int i = 0;
+    for ( const auto &pu:puzzles ) {
+        char first = pu[0];
+        std::set<char> puhave{pu.begin(), pu.end()};
+        //下面两个for循环中words最多可能有10^5个，而我们必须对words中的每个char进行遍历
+        //所以能不能不深入到char级别进行判断就是我们优化的地方
+        for ( const auto &wo:words ) {
+            bool havefirst = false, havenotexist = false;
+            for ( const auto &item:wo ) {
+                if ( puhave.find(item) == puhave.end())havenotexist = true;
+                else if ( item == first )havefirst = true;
+            }
+            if ( havefirst && !havenotexist)ret[i]++;
+
+        }
+        ++i;
+    }
+    return ret;
+}
+```
+
+在优化之前先介绍一下状态压缩，如果我们想知道`word`这个单词中哪个字母存在，哪个字母不存在，我们可以用数组来表示，比如`int alphabet[26]`，用1表示出现，0表示没出现，所以如果一个单词`abc`就可以用`alphabet[26]=[111]`来表示。
+
+可以看到此时的数组就是26个1和0组成的，就是一个二进制数字的形式，所以对于数组我们可以进一步优化成用二进制来表示，也就是用26个二进制数字，1表示存在，0表示不存在，所以问题就是我们该怎样存储这个二进制数字呢？
+
+考虑到`int`占4个字节，也就是一共32个二进制数字，我们可以用`int`来表示一个二进制数字。比如(5)<sub>10</sub>=(101)<sub>2</sub>。
+
+因此我们可以把`words`中的每个`word`都用二进制数字来表示，这里我们用到了位操作`<<`，表示1向左移动`(c-'a')`位，比如`1<<2=100`，所以如果`f`出现了，`f`为第6个字母，那么对应的二进制数字为`100000`，右边`f-a`一共5个0。代码如下：
+
+```c++
+for ( const auto &c : word ) {
+    temp |= 1<<(c-'a');
+}
+```
+
+现在回到题目，对于`words`，考虑到`words`中可能有出现字母相同的单词，比如`abd`和`abddd`，我们可以使用一个`map`来存储每种组合的次数，所以上面的代码可以扩展为：
+
+```c++
+map<int,int> wordCounts{};
+for(const auto& word:words){
+    int temp = 0;
+    for ( const auto &c : word ) {
+        temp |= 1<<(c-'a');
+    }
+    wordCounts[temp]++;
+}
+```
+
+现在我们已经将所有的`words`都压缩成二进制表达了，接下来我们依然遍历`puzzles`，看看`words`是不是`puzzles`的子集，并且必须是包含`puzzles`的第一个字母的子集。这里就用到了在`78.子集`中用到的求子集的方法，但是我们需要加一个指定条件，那就是这个子集必须含有`puzzles`的第一个字母。
+
+所以我们首先将`puzzles`也用二进制表达，同时我们用`first`来记录`puzzles`第一个字母：
+
+```c++
+for(const auto& puzzle:puzzles){
+    int first = 1<<(puzzle[0]-'a');
+    for ( const auto &c : puzzle )puzzleCount[i] |= 1 << (c - 'a');
+}
+```
+
+接下来我们开始遍历每个`puzzle`的子集，我们用`78.子集`的方法实现，同时我们和`first`进行与操作，只有当子集中含有`first`的时候我们才检查这个时候`word`中有不有`puzzle`的子集。因为我们要寻找`word`在不在`puzzles`中可以理解成`puzzles`的子集等不等于`words`。
+
+```c++
+vector<int> puzzleCount(puzzles.size(),0),ret(puzzles.size(),0);
+int i = 0;
+for(const auto& puzzle:puzzles){
+    int first = 1<<(puzzle[0]-'a');
+    for ( const auto &c : puzzle )puzzleCount[i] |= 1 << (c - 'a');
+    int ori = puzzleCount[i];
+    //现在的puzzleCount[i]就是含有的所有子集的，我们要从中筛选出有first的子集
+    while(puzzleCount[i]>0){
+        if(puzzleCount[i] & first){
+            auto iter = wordCounts.find(puzzleCount[i]);
+            if(iter!=wordCounts.end())ret[i]+=iter->second;
+        }
+        puzzleCount[i] = (puzzleCount[i]-1)&ori;
+    }
+    ++i;
+}
+```
+
+最后我们将结果存储在`ret`中，所以整体代码为：
+
+```c++
+vector<int> findNumOfValidWords(vector<string>& words, vector<string>& puzzles) {
+    map<int,int> wordCounts{};
+    vector<int> puzzleCount(puzzles.size(),0),ret(puzzles.size(),0);
+    int i = 0;
+    for(const auto& word:words){
+        int temp = 0;
+        for ( const auto &c : word ) {
+            temp |= 1<<(c-'a');
+        }
+        wordCounts[temp]++;
+    }
+    for(const auto& puzzle:puzzles){
+        int first = 1<<(puzzle[0]-'a');
+        for ( const auto &c : puzzle )puzzleCount[i] |= 1 << (c - 'a');
+        int ori = puzzleCount[i];
+        //现在的puzzleCount[i]就是含有的所有子集的，我们要从中筛选出有first的子集
+        while(puzzleCount[i]>0){
+            if(puzzleCount[i] & first){
+                auto iter = wordCounts.find(puzzleCount[i]);
+                if(iter!=wordCounts.end())ret[i]+=iter->second;
+            }
+            puzzleCount[i] = (puzzleCount[i]-1)&ori;
+        }
+        ++i;
+    }
+    return ret;
+}
+```
+
+# 2021.2.28 [5690. 最接近目标价格的甜点成本](https://leetcode-cn.com/problems/closest-dessert-cost/)
+
+标准的DFS的问题，因为每一次操作我们都可以进行几次抉择，有点像子集那个题目的第一种做法。
+
+回忆一下题目，每次我们进行操作的时候，我们一共有3个选择：
+
+1. 什么小料都不加；
+2. 加一份小料；
+3. 加两份小料。
+
+每一份小料我们都可以这样抉择，那么n中小料就一共会有3<sup>n</sup>种结果。现在用一个基料为`{2}`，两种小料`{2,4}`演示如下图：
+
+所以我们可以用DFS递归来实现，设计一个`void dfs()`函数，这个函数首先需要小料，然后需要加入哪个小料，然后需要一个变量来存储加入了小料之后当前的状态，所以这个函数暂时可以设计成`void dfs(vector<int>& top, int index, int current)`，但是这还不够，因为我们要设计出什么时候停止。观察下图可以看出来，当所有的小料都被遍历之后，我们就可以结束我们的程序了，因为此时刚好有3^2=9种情况。这时由于我们饿需要比较这9钟结果，找到里面最接近`target`的值，所以我们还需要传入`target`，以及当前的最优解`ret`，以及我们用`diff`来表示当前最优解和`target`之间的差。
+
+所以最后可以设置成函数如下：
+
+```c++
+void dfs(vector<int> &top, int current, int index, int &ret, int& target, int& diff) {
+    if(index==top.size()){
+        if(abs(current-target)<diff){
+            diff = abs(current-target);
+            ret = current;
+        }
+        return;
+    }
+    dfs(top, current, index + 1, ret, target,diff);
+    dfs(top, current + top[index], index + 1, ret, target,diff);
+    dfs(top, current + top[index] * 2, index + 1, ret,target,diff);
+}
+```
+
+那么主函数就是调用这个`dfs`函数。
+
+```c++
+int closestCost(vector<int>& baseCosts, vector<int>& toppingCosts, int target) {
+    int ret = 0, diff = INT32_MAX;
+    for ( const auto &baseCost : baseCosts ) {
+        std::set<int> costs{};
+        int current = baseCost;
+        dfs(toppingCosts, current, 0, ret, target,diff);
+
+    }
+    return ret;
+}
+```
