@@ -1,3 +1,0 @@
-"D:\CLion 2020.2.4\bin\cmake\win\bin\cmake.exe" -E rm -f CMakeFiles\_643___I.dir/objects.a
-C:\mingw64\bin\ar.exe cr CMakeFiles\_643___I.dir/objects.a @CMakeFiles\_643___I.dir\objects1.rsp
-C:\mingw64\bin\g++.exe -g   -Wl,--whole-archive CMakeFiles\_643___I.dir/objects.a -Wl,--no-whole-archive  -o _643___I.exe -Wl,--out-implib,lib_643___I.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\_643___I.dir\linklibs.rsp

@@ -1,3 +1,0 @@
-D:/.DATA/leetcode/978. 最长湍流子数组/cmake-build-debug/CMakeFiles/978__.dir
-D:/.DATA/leetcode/978. 最长湍流子数组/cmake-build-debug/CMakeFiles/edit_cache.dir
-D:/.DATA/leetcode/978. 最长湍流子数组/cmake-build-debug/CMakeFiles/rebuild_cache.dir

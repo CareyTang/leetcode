@@ -1,3 +1,0 @@
-"D:\CLion 2020.2.4\bin\cmake\win\bin\cmake.exe" -E rm -f CMakeFiles\209__.dir/objects.a
-C:\mingw64\bin\ar.exe cr CMakeFiles\209__.dir/objects.a @CMakeFiles\209__.dir\objects1.rsp
-C:\mingw64\bin\g++.exe -g   -Wl,--whole-archive CMakeFiles\209__.dir/objects.a -Wl,--no-whole-archive  -o 209__.exe -Wl,--out-implib,lib209__.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\209__.dir\linklibs.rsp
