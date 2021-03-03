@@ -16,12 +16,12 @@ using std::multimap;
 using std::map;
 
 class Solution {
-public:
-    string minWindow(string s, string t) {
+ public:
+  string minWindow(string s, string t) {
 
-    }
+  }
 };
 int main() {
-    std::cout << "Hello, World!" << std::endl;
-    return 0;
+  std::cout << "Hello, World!" << std::endl;
+  return 0;
 }

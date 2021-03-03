@@ -24,26 +24,26 @@ using std::multimap;
 using std::map;
 
 class Solution {
-public:
-    int maxSatisfied(vector<int>& customers, vector<int>& grumpy, int X) {
-        int ret = INT32_MIN,size = grumpy.size(),happy{};
-        int start = 0, end = 0;
-        for(int i = 0; i<size; ++i)happy+=(1-grumpy[i])*customers[i];
-        while(end<size){
-            if(end-start==X-1){
-                happy-=grumpy[start]*customers[start];
-                ++start;
-            }
-            happy+=grumpy[end]*customers[end];
-            ++end;
-            ret = std::max(ret,happy);
-        }
-        return ret;
-    }
+ public:
+  int maxSatisfied(vector<int> &customers, vector<int> &grumpy, int X) {
+	int ret = INT32_MIN, size = grumpy.size(), happy{};
+	int start = 0, end = 0;
+	for (int i = 0; i < size; ++i)happy += (1 - grumpy[i]) * customers[i];
+	while (end < size) {
+	  if (end - start==X - 1) {
+		happy -= grumpy[start] * customers[start];
+		++start;
+	  }
+	  happy += grumpy[end] * customers[end];
+	  ++end;
+	  ret = std::max(ret, happy);
+	}
+	return ret;
+  }
 };
 int main() {
-    vector<int> a{1,0,1,2,1,1,7,5},b{0,1,0,1,0,1,0,1};
-    Solution sol;
-    sol.maxSatisfied(a,b,3);
-    return 0;
+  vector<int> a{1, 0, 1, 2, 1, 1, 7, 5}, b{0, 1, 0, 1, 0, 1, 0, 1};
+  Solution sol;
+  sol.maxSatisfied(a, b, 3);
+  return 0;
 }

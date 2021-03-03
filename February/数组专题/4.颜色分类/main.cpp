@@ -18,13 +18,13 @@ using std::map;
 using std::priority_queue;
 
 class Solution {
-public:
-    void sortColors(vector<int>& nums) {
-        std::sort(nums.begin(),nums.end());
-    }
+ public:
+  void sortColors(vector<int> &nums) {
+	std::sort(nums.begin(), nums.end());
+  }
 };
 
 int main() {
-    std::cout << "Hello, World!" << std::endl;
-    return 0;
+  std::cout << "Hello, World!" << std::endl;
+  return 0;
 }

@@ -20,34 +20,37 @@ using std::unordered_set;
 using std::set;
 
 class Solution {
-public:
-    int closestCost(vector<int>& baseCosts, vector<int>& toppingCosts, int target) {
-        int ret = 0, diff = INT32_MAX;
-        for ( const auto &baseCost : baseCosts ) {
-            int current = baseCost;
-            dfs(toppingCosts, current, 0, ret, target,diff);
+ public:
+  int closestCost(vector<int> &baseCosts, vector<int> &toppingCosts, int target) {
+	for (const auto &baseCost : baseCosts) {
+	  int current = baseCost;
+	  dfs(toppingCosts, current, 0, target);
+	}
+	return ret;
+  }
 
-        }
-        return ret;
-    }
+  Solution &dfs(vector<int> &top, int current, int index, int &target) {
+	if (index==top.size()) {
+	  if (abs(current - target) < diff) {
+		diff = abs(current - target);
+		ret = current;
+	  }
+	  return *this;
+	}
+	dfs(top, current, index + 1, target);
+	dfs(top, current + top[index], index + 1, target);
+	dfs(top, current + top[index] * 2, index + 1, target);
+	return *this;
+  }
 
-    void dfs(vector<int> &top, int current, int index, int &ret, int& target, int& diff) {
-        if(index==top.size()){
-            if(abs(current-target)<diff){
-                diff = abs(current-target);
-                ret = current;
-            }
-            return;
-        }
-        dfs(top, current, index + 1, ret, target,diff);
-        dfs(top, current + top[index], index + 1, ret, target,diff);
-        dfs(top, current + top[index] * 2, index + 1, ret,target,diff);
-    }
+ private:
+  int ret = 0;
+  int diff = INT32_MAX;
 };
 int main() {
-    Solution sol;
-    vector<int> a{10},b{1};
-    int t{1};
-    sol.closestCost(a,b,t);
-    return 0;
+  Solution sol;
+  vector<int> a{2, 3}, b{4, 5, 100};
+  int t{18};
+  std::cout << sol.closestCost(a, b, t) << std::endl;
+  return 0;
 }

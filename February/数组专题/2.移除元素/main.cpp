@@ -16,25 +16,24 @@ using std::multimap;
 using std::map;
 
 class Solution {
-public:
-    int removeElement(vector<int>& nums, int val) {
-        int left = 0, right = 0, count = 0,size = nums.size();
-        while (right<size){
-            if(nums[right]!=val){
-                nums[left] = nums[right];
-                ++left;
-                ++count;
-            }
-            ++right;
-        }
-        return count;
-    }
+ public:
+  int removeElement(vector<int> &nums, int val) {
+	int left = 0, right = 0, count = 0, size = nums.size();
+	while (right < size) {
+	  if (nums[right]!=val) {
+		nums[left] = nums[right];
+		++left;
+		++count;
+	  }
+	  ++right;
+	}
+	return count;
+  }
 };
 
-
 int main() {
-    Solution sol;
-    vector<int>nums{0,1,2,2,3,0,4,2};
-    std::cout<<sol.removeElement(nums,2)<<std::endl;
-    return 0;
+  Solution sol;
+  vector<int> nums{0, 1, 2, 2, 3, 0, 4, 2};
+  std::cout << sol.removeElement(nums, 2) << std::endl;
+  return 0;
 }
